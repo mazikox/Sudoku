@@ -1,0 +1,22 @@
+[
+	{
+		"categoryCodeId": "1",
+		"name": "Zdrowie i uroda"
+	},
+	{
+		"categoryCodeId": "2",
+		"name": "Żywność"
+	},
+	{
+		"categoryCodeId": "3",
+		"name": "Transport"
+	},
+	{
+		"categoryCodeId": "4",
+		"name": "Media"
+	},
+	{
+		"categoryCodeId": "5",
+		"name": "Czynsz"
+	}
+]

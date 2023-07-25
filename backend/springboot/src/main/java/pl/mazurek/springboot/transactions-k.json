@@ -1,0 +1,70 @@
+{
+  "data": [
+    {
+      "categoryCode": "1",
+      "date": 1600387200000,
+      "amount": 5000,
+      "currencyCode": "EUR",
+      "originatorAccountNumber": "SI64397745065188826",
+      "counterpartyAccount": "AD64397381765128766",
+      "paymentType": "DOMESTIC",
+      "status": "ENTERED",
+      "title": "some title"
+    },
+    {
+      "categoryCode": "3",
+      "date": 1600387200000,
+      "amount": 13.3,
+      "currencyCode": "EUR",
+      "originatorAccountNumber": "CD64397745065188826",
+      "counterpartyAccount": "AD64397381765128766",
+      "paymentType": "DOMESTIC",
+      "status": "ACCEPTED",
+      "title": "some title 2"
+    },
+    {
+      "categoryCode": "3",
+      "date": 1600385200000,
+      "amount": 1.8,
+      "currencyCode": "EUR",
+      "originatorAccountNumber": "EF6439457065187826",
+      "counterpartyAccount": "AD64397381765128766",
+      "paymentType": "DOMESTIC",
+      "status": "ACCEPTED",
+      "title": "some title 3"
+    },
+    {
+      "categoryCode": "5",
+      "date": 1600385212000,
+      "amount": 11.8,
+      "currencyCode": "USD",
+      "originatorAccountNumber": "GH6439457065187826",
+      "counterpartyAccount": "AD64397639765128766",
+      "paymentType": "DOMESTIC",
+      "status": "COMPLETED",
+      "title": "some title 4"
+    },
+    {
+      "categoryCode": "5",
+      "date": 1600385186000,
+      "amount": 107.8,
+      "currencyCode": "EUR",
+      "originatorAccountNumber": "GH6439457065187826",
+      "counterpartyAccount": "AD64397639765128766",
+      "paymentType": "DOMESTIC",
+      "status": "REJECTED",
+      "title": "some title 5"
+    },
+    {
+      "categoryCode": "4",
+      "date": 1600388886000,
+      "amount": 107.8,
+      "currencyCode": "EUR",
+      "originatorAccountNumber": "GH6439457065187826",
+      "counterpartyAccount": "AD64397639765128766",
+      "paymentType": "DOMESTIC",
+      "status": "REJECTED",
+      "title": "some title 6"
+    }
+  ]
+}
