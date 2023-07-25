@@ -1,4 +1,4 @@
-package pl.mazurek.springboot.api;
+package pl.mazurek.springboot.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
