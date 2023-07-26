@@ -1,5 +1,6 @@
 package pl.mazurek.springboot.api;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,23 +10,19 @@ import pl.mazurek.springboot.service.CategoriesService;
 
 @RestController
 @RequestMapping("/categories")
-public class CategoriesApi {
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class CategoriesController {
 
-    CategoriesService categoriesService;
-
-    @Autowired
-    public CategoriesApi(CategoriesService categoriesService) {
-        this.categoriesService = categoriesService;
-    }
+    private final CategoriesService categoriesService;
 
     @GetMapping("/all")
-    public Iterable<Categories> findAll(){
+    public Iterable<Categories> findAll() {
         return categoriesService.findAll();
     }
 
 
     @GetMapping("/fill")
-    public void fillFromJson(){
+    public void fillFromJson() {
         categoriesService.fillFromJson();
     }
 }

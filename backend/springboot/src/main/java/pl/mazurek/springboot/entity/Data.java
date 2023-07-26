@@ -19,8 +19,10 @@ public class Data {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String categoryCode;
-    private String date;
+    @OneToOne
+    @JoinColumn(name = "category_code_id")
+    private Categories categoryCode;
+    private Long date;
     private Double amount;
     private String currencyCode;
     private String originatorAccountNumber;

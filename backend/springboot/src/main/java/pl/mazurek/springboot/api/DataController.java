@@ -1,21 +1,22 @@
 package pl.mazurek.springboot.api;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import pl.mazurek.springboot.entity.Data;
+import pl.mazurek.springboot.entity.DataDto;
 import pl.mazurek.springboot.service.DataService;
 
 @RestController
 @RequestMapping("/data")
-public class DataApi {
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class DataController {
 
-    private DataService dataService;
-
-    @Autowired
-    public DataApi(DataService dataService) {
-        this.dataService = dataService;
-    }
+    private final DataService dataService;
 
     @GetMapping("/all")
     public Iterable<Data> findAll() {
@@ -23,17 +24,19 @@ public class DataApi {
     }
 
     @GetMapping("/get")
-    public Page<Data> pagination(
+    public Page<DataDto> pagination(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "100") Integer size,
             @RequestParam(defaultValue = "id") String sort,
-            @RequestParam(defaultValue = "1") String categoryCode) {
+            @RequestParam(defaultValue = "0") Long categoryCode) {
         return dataService.find(page, size, sort, categoryCode);
     }
 
 
     @GetMapping("/fill")
-    public void fillFromJson(){
+    public void fillFromJson() {
         dataService.fillFromJson();
     }
+
+
 }

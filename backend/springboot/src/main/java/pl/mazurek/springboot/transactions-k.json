@@ -1,7 +1,10 @@
 {
   "data": [
     {
-      "categoryCode": "1",
+      "categoryCode":{
+        "categoryCodeId": "1",
+        "name": "Zdrowie i uroda"
+      },
       "date": 1600387200000,
       "amount": 5000,
       "currencyCode": "EUR",
@@ -12,7 +15,10 @@
       "title": "some title"
     },
     {
-      "categoryCode": "3",
+      "categoryCode":{
+        "categoryCodeId": "1",
+        "name": "Zdrowie i uroda"
+      },
       "date": 1600387200000,
       "amount": 13.3,
       "currencyCode": "EUR",
@@ -23,7 +29,10 @@
       "title": "some title 2"
     },
     {
-      "categoryCode": "3",
+      "categoryCode":{
+        "categoryCodeId": "5",
+        "name": "Czynsz"
+      },
       "date": 1600385200000,
       "amount": 1.8,
       "currencyCode": "EUR",
@@ -34,7 +43,10 @@
       "title": "some title 3"
     },
     {
-      "categoryCode": "5",
+      "categoryCode":{
+        "categoryCodeId": "1",
+        "name": "Zdrowie i uroda"
+      },
       "date": 1600385212000,
       "amount": 11.8,
       "currencyCode": "USD",
@@ -45,7 +57,10 @@
       "title": "some title 4"
     },
     {
-      "categoryCode": "5",
+      "categoryCode":{
+        "categoryCodeId": "2",
+        "name": "Żywność"
+      },
       "date": 1600385186000,
       "amount": 107.8,
       "currencyCode": "EUR",
@@ -56,7 +71,10 @@
       "title": "some title 5"
     },
     {
-      "categoryCode": "4",
+      "categoryCode":{
+        "categoryCodeId": "5",
+        "name": "Test"
+      },
       "date": 1600388886000,
       "amount": 107.8,
       "currencyCode": "EUR",
