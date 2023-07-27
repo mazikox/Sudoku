@@ -4,8 +4,7 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  template: '<div>{{ data }}</div>'
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
   title = 'peachtreeBank';
@@ -19,11 +18,9 @@ export class AppComponent implements OnInit {
   }
 
   public getMethod() {
-     this.http.get('http://localhost:8080/appversion', {responseType: 'text'}).subscribe((data) => {
+     this.http.get('/appversion', {responseType: 'text'}).subscribe((data) => {
       this.data = data;
       console.log(data);
      });
   }
-
-  
 }
