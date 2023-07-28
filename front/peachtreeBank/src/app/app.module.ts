@@ -6,21 +6,24 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BackComponent } from './components/back/back.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    BackComponent
-  ],
+  declarations: [AppComponent, BackComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatTableModule
+    MatTableModule,
+    MatInputModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

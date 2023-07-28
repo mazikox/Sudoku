@@ -1,19 +1,18 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
-import {Observable} from "rxjs";
+import { Injectable, numberAttribute } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClientService {
+  constructor(private httpClient: HttpClient) {}
 
-  constructor(private httpClient: HttpClient) {
+  public getApi(page: number, pageSize: number, categoryCode: string, sortedBy: string): Observable<RootObject> {
+    return this.httpClient.get<RootObject>(
+      '/data/get' + '?page=' + page + '&pageSize=' + pageSize + '&categoryCode=' + categoryCode + '&sort=' + sortedBy
+    );
   }
-
-  public getApi(): Observable<RootObject> {
-    return this.httpClient.get<RootObject>('/data/get');
-  }
-
 }
 
 export interface RootObject {

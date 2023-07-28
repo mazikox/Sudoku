@@ -17,6 +17,7 @@ import java.util.List;
 public class CategoriesService {
 
     private final CategoriesRepo categoriesRepo;
+    private final ObjectMapper mapper;
 
 
     public Iterable<Categories> findAll() {
@@ -29,7 +30,6 @@ public class CategoriesService {
 
 
     public void fillFromJson() {
-        ObjectMapper mapper = new ObjectMapper();
         File file = new File("springboot/src/main/java/pl/mazurek/springboot/category.json");
 
         try {

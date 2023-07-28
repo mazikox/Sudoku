@@ -1,17 +1,16 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {BackComponent} from "./components/back/back.component";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { BackComponent } from './components/back/back.component';
 
 const routes: Routes = [
   {
     path: 'api',
-    component: BackComponent
-  }
+    component: BackComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

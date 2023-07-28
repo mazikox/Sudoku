@@ -26,10 +26,10 @@ public class DataController {
     @GetMapping("/get")
     public Page<DataDto> pagination(
             @RequestParam(defaultValue = "0") Integer page,
-            @RequestParam(defaultValue = "100") Integer size,
+            @RequestParam(defaultValue = "100") Integer pageSize,
             @RequestParam(defaultValue = "id") String sort,
             @RequestParam(defaultValue = "0") Long categoryCode) {
-        return dataService.find(page, size, sort, categoryCode);
+        return dataService.find(page, pageSize, sort, categoryCode);
     }
 
 

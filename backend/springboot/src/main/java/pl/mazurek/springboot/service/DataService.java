@@ -20,6 +20,7 @@ public class DataService {
 
     private final DataRepo dataRepo;
     private final DataDtoMapper dataDtoMapper;
+    private final ObjectMapper mapper;
 
 
     public List<Data> findAll() {
@@ -42,7 +43,6 @@ public class DataService {
 
 
     public void fillFromJson() {
-        ObjectMapper mapper = new ObjectMapper();
         File file = new File("springboot/src/main/java/pl/mazurek/springboot/transactions-k.json");
 
         Transaction transaction = null;
