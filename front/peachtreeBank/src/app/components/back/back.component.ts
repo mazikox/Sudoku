@@ -3,7 +3,7 @@ import {ClientService,} from '../../services/client.service';
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator,} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
-import {Subject, catchError, map, of as observableOf, startWith, switchMap, takeUntil} from 'rxjs';
+import {catchError, map, of as observableOf, startWith, Subject, switchMap, takeUntil} from 'rxjs';
 
 @Component({
   selector: 'app-back',
@@ -46,28 +46,24 @@ export class BackComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
     this.displayData();
   }
 
   applyFilter(event: Event) {
-    const inputElement = event.target as HTMLInputElement;
-    const filterValue = inputElement.value;
-    this.categoryCode = filterValue;
+    this.categoryCode = (event.target as HTMLInputElement).value;
     this.destroy.next();
     this.displayData();
   }
 
   applySort(event: Event) {
-    const sortValue = (event.target as HTMLInputElement).value;
-    this.sortedBy = sortValue;
+    this.sortedBy = (event.target as HTMLInputElement).value;
     this.destroy.next();
     this.displayData()
   }
 
 
   displayData() {
-    this.dataSource.paginator = this.paginator;
-
     this.paginator.page
       .pipe(
         startWith({}),
@@ -79,7 +75,6 @@ export class BackComponent implements OnInit, AfterViewInit {
         }),
         map((contentData) => {
           if (contentData == null) return [];
-          debugger;
           this.totalElements = contentData.totalElements;
           this.pageSize = contentData.size;
           console.log('totaldata' + this.totalElements)
@@ -91,7 +86,7 @@ export class BackComponent implements OnInit, AfterViewInit {
       .subscribe((contData) => {
         this.ContentData = contData;
         this.dataSource = new MatTableDataSource(this.ContentData);
-        // this.dataSource.sort = this.sort;
+        this.dataSource.sort = this.sort;
       });
   }
 }
