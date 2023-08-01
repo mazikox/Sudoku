@@ -19,7 +19,6 @@ import java.util.List;
 public class DataService {
 
     private final DataRepo dataRepo;
-    private final DataDtoMapper dataDtoMapper;
     private final ObjectMapper mapper;
 
 
@@ -35,15 +34,15 @@ public class DataService {
     public Page<DataDto> find(int page, int size, String sort, Long categoryCode) {
         PageRequest pr = PageRequest.of(page, size, Sort.by(sort));
         if (categoryCode == 0) {
-            return dataRepo.findAll(pr).map(dataDtoMapper);
+            return dataRepo.findAll(pr).map(DataMapper.INSTANCE::dataToDataDt);
         } else {
-            return dataRepo.findByCategoryCode(new Categories(categoryCode, ""), pr).map(dataDtoMapper);
+            return dataRepo.findByCategoryCode(new Categories(categoryCode, ""), pr).map(DataMapper.INSTANCE::dataToDataDt);
         }
     }
 
 
     public void fillFromJson() {
-        File file = new File("springboot/src/main/java/pl/mazurek/springboot/transactions-k.json");
+        File file = new File("backend/springboot/src/main/java/pl/mazurek/springboot/transactions-k.json");
 
         Transaction transaction = null;
 

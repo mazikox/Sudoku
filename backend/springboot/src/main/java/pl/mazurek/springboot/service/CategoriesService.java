@@ -30,7 +30,7 @@ public class CategoriesService {
 
 
     public void fillFromJson() {
-        File file = new File("springboot/src/main/java/pl/mazurek/springboot/category.json");
+        File file = new File("backend/springboot/src/main/java/pl/mazurek/springboot/category.json");
 
         try {
             List<Categories> categories = mapper.readValue(file, new TypeReference<List<Categories>>() {

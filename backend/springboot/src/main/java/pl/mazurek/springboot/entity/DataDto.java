@@ -1,15 +1,26 @@
 package pl.mazurek.springboot.entity;
 
-public record DataDto(
-        Long id,
-        String categoryCode,
-        String date,
-        Double amount,
-        String currencyCode,
-        String originatorAccountNumber,
-        String counterpartyAccount,
-        String paymentType,
-        String status,
-        String title
-) {
+import lombok.*;
+import lombok.Data;
+
+import java.time.LocalDate;
+
+@Data
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class DataDto {
+
+    private Long id;
+    private String categoryCode;
+    private LocalDate date;
+    private Double amount;
+    private String currencyCode;
+    private String originatorAccountNumber;
+    private String counterpartyAccount;
+    private String paymentType;
+    private String status;
+    private String title;
 }
