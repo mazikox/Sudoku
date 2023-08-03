@@ -11,7 +11,7 @@ import java.util.Arrays;
 @Setter
 public class Transaction {
 
-    Data data[];
+    Data[] data;
 
     @Override
     public String toString() {

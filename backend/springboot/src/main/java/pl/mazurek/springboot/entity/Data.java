@@ -1,17 +1,11 @@
 package pl.mazurek.springboot.entity;
 
 
-import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
 
 
 @Entity
-@Getter
-@Setter
 @lombok.Data
-@ToString
 public class Data {
 
 

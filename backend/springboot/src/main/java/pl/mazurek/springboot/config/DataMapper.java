@@ -1,8 +1,10 @@
-package pl.mazurek.springboot.entity;
+package pl.mazurek.springboot.config;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import pl.mazurek.springboot.entity.Data;
+import pl.mazurek.springboot.entity.DataDto;
 
 import java.time.Instant;
 import java.time.LocalDate;

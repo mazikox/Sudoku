@@ -1,11 +1,16 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { BackComponent } from './components/back/back.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {BackComponent} from './components/back/back.component';
+import {PayeesComponent} from "./components/payees/payees.component";
 
 const routes: Routes = [
   {
-    path: 'api',
+    path: 'transactions',
     component: BackComponent,
+  },
+  {
+    path: 'payees',
+    component: PayeesComponent,
   },
 ];
 
@@ -13,4 +18,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

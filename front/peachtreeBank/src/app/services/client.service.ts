@@ -8,9 +8,14 @@ import { Observable } from 'rxjs';
 export class ClientService {
   constructor(private httpClient: HttpClient) {}
 
-  public getApi(page: number, pageSize: number, categoryCode: string, sortedBy: string): Observable<RootObject> {
+  public getApiCategoryCode(url: string, page: number, pageSize: number, categoryCode: string, sortedBy: string): Observable<RootObject> {
     return this.httpClient.get<RootObject>(
-      '/data/get' + '?page=' + page + '&pageSize=' + pageSize + '&categoryCode=' + categoryCode + '&sort=' + sortedBy
+      url + '?page=' + page + '&pageSize=' + pageSize + '&categoryCode=' + categoryCode + '&sort=' + sortedBy
+    );
+  }
+  public getApi(url: string, page: number, pageSize: number, sortedBy: string): Observable<RootObject> {
+    return this.httpClient.get<RootObject>(
+      url + '?page=' + page + '&pageSize=' + pageSize + '&sort=' + sortedBy
     );
   }
 }

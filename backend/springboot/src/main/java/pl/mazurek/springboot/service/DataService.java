@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import pl.mazurek.springboot.entity.DataDto;
+import pl.mazurek.springboot.config.DataMapper;
 import pl.mazurek.springboot.entity.*;
 import pl.mazurek.springboot.repo.DataRepo;
 

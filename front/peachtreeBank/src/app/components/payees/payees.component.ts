@@ -1,27 +1,22 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {ClientService,} from '../../services/client.service';
-import {MatSort} from '@angular/material/sort';
-import {MatPaginator,} from '@angular/material/paginator';
-import {MatTableDataSource} from '@angular/material/table';
-import {catchError, map, of as observableOf, startWith, Subject, switchMap, takeUntil} from 'rxjs';
+import {MatSort} from "@angular/material/sort";
+import {MatPaginator} from "@angular/material/paginator";
+import {catchError, map, of as observableOf, startWith, Subject, switchMap, takeUntil} from "rxjs";
+import {ClientService} from "../../services/client.service";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
-  selector: 'app-back',
-  templateUrl: './back.component.html',
-  styleUrls: ['./back.component.scss'],
+  selector: 'app-payees',
+  templateUrl: './payees.component.html',
+  styleUrls: ['./payees.component.scss']
 })
-export class BackComponent implements OnInit, AfterViewInit {
+export class PayeesComponent implements AfterViewInit {
   displayColumn: string[] = [
     'id',
-    'categoryCode',
-    'date',
-    'amount',
-    'currencyCode',
-    'originatorAccountNumber',
-    'counterpartyAccount',
-    'paymentType',
-    'status',
-    'title',
+    'name',
+    'address',
+    'accountNumber',
+    'active',
   ];
   dataSource: any = [];
   @ViewChild(MatSort) sort!: MatSort;
@@ -29,7 +24,6 @@ export class BackComponent implements OnInit, AfterViewInit {
   totalElements: any;
   pageSize: any;
   ContentData: any;
-  categoryCode = '';
   sortedBy = '';
   destroy = new Subject<void>();
 
@@ -37,21 +31,13 @@ export class BackComponent implements OnInit, AfterViewInit {
   constructor(private clientService: ClientService) {
   }
 
-  ngOnInit() {
-  }
 
   getTableData$(pageNumber: number) {
-    return this.clientService.getApiCategoryCode('/data/get', pageNumber, 2, this.categoryCode, this.sortedBy);
+    return this.clientService.getApi('/payees/get', pageNumber, 5, this.sortedBy);
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.displayData();
-  }
-
-  applyFilter(event: Event) {
-    this.categoryCode = (event.target as HTMLInputElement).value;
-    this.destroy.next();
     this.displayData();
   }
 
@@ -60,7 +46,6 @@ export class BackComponent implements OnInit, AfterViewInit {
     this.destroy.next();
     this.displayData();
   }
-
 
   displayData() {
     this.paginator.page
@@ -75,7 +60,7 @@ export class BackComponent implements OnInit, AfterViewInit {
           if (contentData == null) return [];
           this.totalElements = contentData.totalElements;
           this.pageSize = contentData.size;
-          console.log('totaldata' + this.totalElements)
+          console.log('totaldata' + this.totalElements);
           return contentData.content;
         }),
         takeUntil(this.destroy)
@@ -87,3 +72,4 @@ export class BackComponent implements OnInit, AfterViewInit {
       });
   }
 }
+

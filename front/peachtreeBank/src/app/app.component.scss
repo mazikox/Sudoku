@@ -1,0 +1,13 @@
+.router-button {
+  background-color: #4c4b4b;
+  color: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.router-button:hover {
+  background-color: #727070;
+}

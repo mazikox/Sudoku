@@ -33,8 +33,7 @@ public class CategoriesService {
         File file = new File("backend/springboot/src/main/java/pl/mazurek/springboot/category.json");
 
         try {
-            List<Categories> categories = mapper.readValue(file, new TypeReference<List<Categories>>() {
-            });
+            List<Categories> categories = mapper.readValue(file, new TypeReference<>() {});
             for (Categories category : categories) {
                 save(category);
             }
