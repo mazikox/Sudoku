@@ -1,109 +1,127 @@
 package pl.mazurek.springboot.service;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.transaction.TransactionSystemException;
 import pl.mazurek.springboot.entity.Payees;
-import pl.mazurek.springboot.repo.PayeesRepo;
 
-import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 class PayeesServiceTest {
 
-    @Mock
-    private PayeesRepo payeesRepo;
-    private PayeesService underTest;
+    @Autowired
+    private PayeesService payeesService;
 
-    @BeforeEach
-    void setUp() {
-        underTest = new PayeesService(payeesRepo);
+    @AfterEach
+    void tearDown() {
+    }
+
+    @Test
+    void isNameValid() {
+        Payees payees = addUser();
+        Optional<Payees> foundPayee = payeesService.findById("1");
+
+        assertThat(foundPayee).isPresent();
+        assertThat(foundPayee).contains(payees);
     }
 
 
     @Test
-    void canGetAllPayees() {
-        PageRequest pr = PageRequest.of(0, 10);
-        // when
-        underTest.find(0, 10, "");
-        //then
-        verify(payeesRepo).findAll(pr);
-    }
-
-    @Test
-    void canGetAllPayeesWithSort() {
-        PageRequest pr = PageRequest.of(0, 10, Sort.by("accountNumber"));
-        // when
-        underTest.find(0, 10, "accountNumber");
-        //then
-        verify(payeesRepo).findAll(pr);
-    }
-
-    @Test
-    void canAddPayees() {
-        //given
+    void isNameTooShortOrLong() {
         Payees payees = new Payees(
-                "Mr. Dusty Gaylord",
+                "Mr",
                 "669 Witting Ferry Apt. 355, North Dayna",
                 "77799744523903246510731838");
-        //when
-        underTest.addPayees(payees);
-        //then
-        ArgumentCaptor<Payees> payeesArgumentCaptor = ArgumentCaptor.forClass(Payees.class);
 
-        verify(payeesRepo).save(payeesArgumentCaptor.capture());
+        assertThrows(TransactionSystemException.class, () -> payeesService.addPayees(payees));
 
-        Payees capturedPayee = payeesArgumentCaptor.getValue();
+        Payees payees2 = new Payees(
+                "Mrgdsgsdgsdgsdgsdgsdgsddgsdgsdgsdgsd",
+                "669 Witting Ferry Apt. 355, North Dayna",
+                "77799744523903246510731838");
 
-        assertThat(capturedPayee).isEqualTo(payees);
+        assertThrows(TransactionSystemException.class, () -> payeesService.addPayees(payees2));
     }
 
     @Test
-    void canAddPayeesArray() {
-        //given
-        List<Payees> payeesList = List.of(new Payees[]{
-                new Payees(
-                        "Mr. Dusty Gaylord",
-                        "669 Witting Ferry Apt. 355, North Dayna",
-                        "77799744523903246510731838"),
-                new Payees(
-                        "Miss Felicity Wisozk",
-                        "6193 Madaline Street, East Hildegard, CO 40469",
-                        "07392682329673867600575925"),
-                new Payees(
-                        "Dr. Tiana Wiza",
-                        "Unit 5346 Box 1213, DPO AE 44367",
-                        "89930003082193608698823904"
-                )
-        });
-        //when
-        underTest.addPayeesArray(payeesList);
-        //then
-        ArgumentCaptor<List<Payees>> payeesArgumentCaptor = ArgumentCaptor.forClass(List.class);
-        verify(payeesRepo).saveAll(payeesArgumentCaptor.capture());
+    void addWithoutNecessaryField(){
+        Payees payees = new Payees(null,
+                "669 Witting Ferry Apt. 355, North Dayna",
+                "77799744523903246510731838");
+        assertThrows(TransactionSystemException.class, () -> payeesService.addPayees(payees));
 
-        List<Payees> capturedPayee = payeesArgumentCaptor.getValue();
+        Payees payees2 = new Payees("Mr World",
+                null,
+                "77799744523903246510731838");
+        assertThrows(TransactionSystemException.class, () -> payeesService.addPayees(payees2));
 
-        assertThat(capturedPayee).isEqualTo(payeesList);
+        Payees payees3 = new Payees("Mr World",
+                "669 Witting Ferry Apt. 355, North Dayna",
+                null);
+        assertThrows(TransactionSystemException.class, () -> payeesService.addPayees(payees3));
+
     }
 
 
     @Test
-    @Disabled
-    void update() {
+    void find() {
+        Payees payees = addUser();
+        Page<Payees> result = payeesService.find(0,5,"");
+
+        assertEquals(payees.getName(), result.getContent().get(0).getName());
     }
 
     @Test
-    @Disabled
-    void delete() {
+    void findWithSort(){
+        Payees payees = addUser();
+        Page<Payees> result = payeesService.find(0,5,"name");
+
+        assertEquals(payees.getName(), result.getContent().get(0).getName());
+    }
+
+    @Test
+    void isPayeeDeleted(){
+        addUser();
+        payeesService.delete("1");
+        Page<Payees> result = payeesService.find(0,5,"");
+        assertFalse(result.getContent().get(0).isActive());
+    }
+
+    @Test
+    void isPayeeActive(){
+        addUser();
+        Page<Payees> result = payeesService.find(0,5,"");
+        assertTrue(result.getContent().get(0).isActive());
+    }
+
+    @Test
+    void isUpdating(){
+        addUser();
+        Payees newPayee = new Payees("Mr. Amari Kunde",
+                "6690 Kshlerin Shoal, Port Lelandside, OR 03408",
+                "72503274082283365628773110");
+        payeesService.update("1", newPayee);
+        assertEquals(newPayee.getName(),payeesService.findById("1").get().getName());
+        assertEquals(newPayee.getAddress(),payeesService.findById("1").get().getAddress());
+        assertEquals(newPayee.getAccountNumber(),payeesService.findById("1").get().getAccountNumber());
+        assertEquals(newPayee.isActive(),payeesService.findById("1").get().isActive());
+    }
+
+
+    Payees addUser(){
+        Payees payees = new Payees(
+                "Mr World",
+                "669 Witting Ferry Apt. 355, North Dayna",
+                "77799744523903246510731838");
+
+        payeesService.addPayees(payees);
+        return payees;
     }
 }

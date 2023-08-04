@@ -35,11 +35,9 @@ public class DataService {
 
     public Page<DataDto> find(int page, int size, String sort, Long categoryCode) {
         PageRequest pr = PageRequest.of(page, size, Sort.by(sort));
-        if (categoryCode == 0) {
-            return dataRepo.findAll(pr).map(DataMapper.INSTANCE::dataToDataDt);
-        } else {
-            return dataRepo.findByCategoryCode(new Categories(categoryCode, ""), pr).map(DataMapper.INSTANCE::dataToDataDt);
-        }
+        return categoryCode == 0 ?
+                dataRepo.findAll(pr).map(DataMapper.INSTANCE::dataToDataDt) :
+                dataRepo.findByCategoryCode(new Categories(categoryCode, ""), pr).map(DataMapper.INSTANCE::dataToDataDt);
     }
 
 

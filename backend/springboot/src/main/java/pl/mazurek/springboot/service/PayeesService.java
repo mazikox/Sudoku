@@ -30,7 +30,7 @@ public class PayeesService {
         Optional<Payees> optionalPayees = payeesRepo.findPayeesByIdIs(IDPREFIX + id);
 
         if (optionalPayees.isPresent()) {
-            Payees existingPayees = optionalPayees.get();
+            Payees existingPayees = optionalPayees.orElseThrow();
             if (payees.getName() != null)
                 existingPayees.setName(payees.getName());
             if (payees.getAddress() != null)
@@ -42,12 +42,7 @@ public class PayeesService {
     }
 
     public Page<Payees> find(int page, int size, String sort) {
-        PageRequest pr;
-        if (sort.equals("")) {
-            pr = PageRequest.of(page, size);
-        } else {
-            pr = PageRequest.of(page, size, Sort.by(sort));
-        }
+        PageRequest pr = sort.equals("") ? PageRequest.of(page, size) : PageRequest.of(page, size, Sort.by(sort));
         return payeesRepo.findAll(pr);
     }
 
@@ -58,6 +53,10 @@ public class PayeesService {
             existingPayees.setActive(false);
             payeesRepo.save(existingPayees);
         }
+    }
+
+    public Optional<Payees> findById(String id) {
+        return payeesRepo.findPayeesByIdIs(IDPREFIX + id);
     }
 
 }

@@ -20,14 +20,13 @@ public class CategoriesService {
     private final ObjectMapper mapper;
 
 
-    public Iterable<Categories> findAll() {
+    public List<Categories> findAll() {
         return categoriesRepo.findAll();
     }
 
     public Categories save(Categories categories) {
         return categoriesRepo.save(categories);
     }
-
 
     public void fillFromJson() {
         File file = new File("backend/springboot/src/main/java/pl/mazurek/springboot/category.json");
