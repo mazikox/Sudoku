@@ -10,7 +10,7 @@ import {catchError, map, of as observableOf, startWith, Subject, switchMap, take
   templateUrl: './back.component.html',
   styleUrls: ['./back.component.scss'],
 })
-export class BackComponent implements OnInit, AfterViewInit {
+export class BackComponent implements AfterViewInit {
   displayColumn: string[] = [
     'id',
     'categoryCode',
@@ -37,11 +37,8 @@ export class BackComponent implements OnInit, AfterViewInit {
   constructor(private clientService: ClientService) {
   }
 
-  ngOnInit() {
-  }
-
   getTableData$(pageNumber: number) {
-    return this.clientService.getApiCategoryCode('/data/get', pageNumber, 2, this.categoryCode, this.sortedBy);
+    return this.clientService.getApiCategoryCode('/transactions/get', pageNumber, 2, this.categoryCode, this.sortedBy);
   }
 
   ngAfterViewInit() {

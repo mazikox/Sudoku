@@ -24,8 +24,8 @@ public class CategoriesService {
         return categoriesRepo.findAll();
     }
 
-    public Categories save(Categories categories) {
-        return categoriesRepo.save(categories);
+    public void save(Categories categories) {
+        categoriesRepo.save(categories);
     }
 
     public void fillFromJson() {

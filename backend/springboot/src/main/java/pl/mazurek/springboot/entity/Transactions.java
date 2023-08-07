@@ -1,12 +1,14 @@
 package pl.mazurek.springboot.entity;
 
 
+import lombok.Data;
+
 import javax.persistence.*;
 
 
 @Entity
-@lombok.Data
-public class Data {
+@Data
+public class Transactions {
 
 
     @Id

@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class MyIdGenerator implements IdentifierGenerator {
 
     private static final String PREFIX = "PB_PAYEE_";
-    private static AtomicInteger COUNTER = new AtomicInteger(0);
+    private static final AtomicInteger COUNTER = new AtomicInteger(0);
 
 
     @Override

@@ -7,35 +7,35 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pl.mazurek.springboot.entity.Data;
-import pl.mazurek.springboot.entity.DataDto;
-import pl.mazurek.springboot.service.DataService;
+import pl.mazurek.springboot.entity.Transactions;
+import pl.mazurek.springboot.entity.TransactionDto;
+import pl.mazurek.springboot.service.TransactionsService;
 
 @RestController
-@RequestMapping("/data")
+@RequestMapping("/transactions")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class DataController {
+public class TransactionsController {
 
-    private final DataService dataService;
+    private final TransactionsService transactionsService;
 
     @GetMapping("/all")
-    public Iterable<Data> findAll() {
-        return dataService.findAll();
+    public Iterable<Transactions> findAll() {
+        return transactionsService.findAll();
     }
 
     @GetMapping("/get")
-    public Page<DataDto> pagination(
+    public Page<TransactionDto> find(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "100") Integer pageSize,
             @RequestParam(defaultValue = "id") String sort,
             @RequestParam(defaultValue = "0") Long categoryCode) {
-        return dataService.find(page, pageSize, sort, categoryCode);
+        return transactionsService.find(page, pageSize, sort, categoryCode);
     }
 
 
     @GetMapping("/fill")
     public void fillFromJson() {
-        dataService.fillFromJson();
+        transactionsService.fillFromJson();
     }
 
 

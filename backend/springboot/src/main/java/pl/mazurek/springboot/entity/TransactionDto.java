@@ -5,7 +5,7 @@ import lombok.Data;
 import java.time.LocalDate;
 
 @Data
-public class DataDto {
+public class TransactionDto {
 
     private Long id;
     private String categoryCode;

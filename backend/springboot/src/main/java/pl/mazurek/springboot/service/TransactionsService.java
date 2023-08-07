@@ -1,0 +1,66 @@
+package pl.mazurek.springboot.service;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import pl.mazurek.springboot.config.TransactionMapper;
+import pl.mazurek.springboot.entity.Categories;
+import pl.mazurek.springboot.entity.TransactionDto;
+import pl.mazurek.springboot.entity.Transactions;
+import pl.mazurek.springboot.repo.DataRepo;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+public class TransactionsService {
+
+    private final DataRepo dataRepo;
+    private final ObjectMapper mapper;
+
+
+    public List<Transactions> findAll() {
+        return dataRepo.findAll();
+    }
+
+    public void save(Transactions transactions) {
+        dataRepo.save(transactions);
+    }
+
+
+    public Page<TransactionDto> find(int page, int size, String sort, Long categoryCode) {
+        PageRequest pr = PageRequest.of(page, size, Sort.by(sort));
+        return categoryCode == 0 ?
+                dataRepo.findAll(pr).map(TransactionMapper.INSTANCE::transactionToTransactionDto) :
+                dataRepo.findByCategoryCode(new Categories(categoryCode, ""), pr).map(TransactionMapper.INSTANCE::transactionToTransactionDto);
+    }
+
+
+    public void fillFromJson() {
+        File file = new File("backend/springboot/src/main/java/pl/mazurek/springboot/transactions-k.json");
+
+        try {
+            JsonNode rootNode = mapper.readTree(file);
+            JsonNode dataNode = rootNode.get("data");
+
+            if (dataNode.isArray()) {
+                List<Transactions> transactionsList = mapper.readValue(dataNode.toString(), new TypeReference<>() {
+                });
+
+                for (Transactions transaction : transactionsList) {
+                    save(transaction);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
