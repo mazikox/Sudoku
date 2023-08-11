@@ -1,17 +1,20 @@
-<div *ngIf="data">
-  <pre>{{ data }}</pre>
-</div>
-
-<br/>
-
+<br>
 <button class="router-button" routerLink="/transactions">
-  TRANSACTIONS
+  TRANSACTIONS LIST
 </button>
 
 <button class="router-button" routerLink="/payees">
-  PAYEES
+  PAYEES LIST
+</button>
+
+<button class="router-button" routerLink="/add">
+  ADD NEW PAYEE
 </button>
 
 <br/><br/>
 <router-outlet></router-outlet>
-
+<footer>
+  <div class="version" *ngIf="data">
+    <pre>{{ data }}</pre>
+  </div>
+</footer>

@@ -9,7 +9,7 @@ import pl.mazurek.springboot.entity.Transactions;
 
 
 @Repository
-public interface DataRepo extends JpaRepository<Transactions,Long> {
+public interface TransactionRepo extends JpaRepository<Transactions,Long> {
 
     Page<Transactions> findByCategoryCode(Categories categories, Pageable pageable);
 

@@ -10,4 +10,5 @@ import java.util.Optional;
 public interface PayeesRepo extends JpaRepository<Payees, Long> {
 
     Optional<Payees> findPayeesByIdIs(String id);
+    Payees findFirstByOrderByIdDesc();
 }

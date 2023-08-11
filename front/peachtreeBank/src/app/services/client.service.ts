@@ -1,22 +1,32 @@
-import { Injectable, numberAttribute } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Injectable, numberAttribute} from '@angular/core';
+import {HttpClient, HttpClientModule, HttpErrorResponse} from '@angular/common/http';
+import {catchError, Observable, throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClientService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   public getApiCategoryCode(url: string, page: number, pageSize: number, categoryCode: string, sortedBy: string): Observable<RootObject> {
     return this.httpClient.get<RootObject>(
       url + '?page=' + page + '&pageSize=' + pageSize + '&categoryCode=' + categoryCode + '&sort=' + sortedBy
     );
   }
+
   public getApi(url: string, page: number, pageSize: number, sortedBy: string): Observable<RootObject> {
     return this.httpClient.get<RootObject>(
       url + '?page=' + page + '&pageSize=' + pageSize + '&sort=' + sortedBy
     );
+  }
+
+  public addUser(url: string, body: Payees){
+    return this.httpClient.post(url, body).pipe(catchError(this.handleError));
+  }
+
+  handleError(error: HttpErrorResponse){
+    return throwError(error)
   }
 }
 
@@ -60,4 +70,10 @@ export interface Content {
   paymentType: string;
   status: string;
   title: string;
+}
+
+export interface Payees {
+  name: string;
+  address: string;
+  accountNumber: string;
 }

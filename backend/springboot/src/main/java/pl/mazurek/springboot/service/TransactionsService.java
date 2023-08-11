@@ -13,34 +13,39 @@ import pl.mazurek.springboot.config.TransactionMapper;
 import pl.mazurek.springboot.entity.Categories;
 import pl.mazurek.springboot.entity.TransactionDto;
 import pl.mazurek.springboot.entity.Transactions;
-import pl.mazurek.springboot.repo.DataRepo;
+import pl.mazurek.springboot.repo.TransactionRepo;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class TransactionsService {
 
-    private final DataRepo dataRepo;
+    private final TransactionRepo transactionRepo;
     private final ObjectMapper mapper;
 
 
     public List<Transactions> findAll() {
-        return dataRepo.findAll();
+        return transactionRepo.findAll();
     }
 
     public void save(Transactions transactions) {
-        dataRepo.save(transactions);
+        transactionRepo.save(transactions);
     }
 
 
     public Page<TransactionDto> find(int page, int size, String sort, Long categoryCode) {
         PageRequest pr = PageRequest.of(page, size, Sort.by(sort));
         return categoryCode == 0 ?
-                dataRepo.findAll(pr).map(TransactionMapper.INSTANCE::transactionToTransactionDto) :
-                dataRepo.findByCategoryCode(new Categories(categoryCode, ""), pr).map(TransactionMapper.INSTANCE::transactionToTransactionDto);
+                transactionRepo.findAll(pr).map(TransactionMapper.INSTANCE::transactionToTransactionDto) :
+                transactionRepo.findByCategoryCode(new Categories(categoryCode, ""), pr).map(TransactionMapper.INSTANCE::transactionToTransactionDto);
+    }
+
+    public Optional<Transactions> findById(Long id){
+        return transactionRepo.findById(id);
     }
 
 

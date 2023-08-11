@@ -8,6 +8,9 @@ import pl.mazurek.springboot.entity.Categories;
 import pl.mazurek.springboot.entity.TransactionDto;
 import pl.mazurek.springboot.entity.Transactions;
 
+import java.util.Optional;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
@@ -25,7 +28,15 @@ class TransactionsAndCategoriesServiceTest {
 
     @Test
     void saveTransaction() {
-        addTransaction();
+        Transactions transactions = addTransaction();
+
+        Optional<Transactions> savedTransaction = transactionsService.findById(transactions.getId());
+
+        assertEquals(transactions.getCategoryCode(), savedTransaction.get().getCategoryCode());
+        assertEquals(transactions.getTitle(), savedTransaction.get().getTitle());
+        assertEquals(transactions.getAmount(), savedTransaction.get().getAmount());
+        assertEquals(transactions.getCurrencyCode(), savedTransaction.get().getCurrencyCode());
+        assertEquals(transactions.getCounterpartyAccount(), savedTransaction.get().getCounterpartyAccount());
     }
 
     @Test

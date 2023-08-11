@@ -34,10 +34,10 @@ class PayeesRepoTest {
                 "77799744523903246510731838");
         underTest.save(payees);
         //when
-        Optional<Payees> expected = underTest.findPayeesByIdIs("PB_PAYEE_1");
+        Optional<Payees> expected = underTest.findPayeesByIdIs("PB_PAYEE_00001");
 
         //then
-        assertThat(expected.get()).isEqualTo(payees);
+        assertThat(expected).contains(payees);
     }
 
 }

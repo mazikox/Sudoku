@@ -13,6 +13,11 @@
     "target": "http://localhost:8080/",
     "secure": false,
     "logLevel": "debug"
+  },
+  "/payees/add": {
+    "target": "http://localhost:8080/",
+    "secure": false,
+    "logLevel": "debug"
   }
 }
 
