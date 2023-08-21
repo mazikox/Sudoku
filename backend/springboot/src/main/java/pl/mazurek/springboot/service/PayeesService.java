@@ -38,7 +38,7 @@ public class PayeesService {
     }
 
     public void update(String id, Payees payees) {
-        Optional<Payees> optionalPayees = payeesRepo.findPayeesByIdIs(IDPREFIX + id);
+        Optional<Payees> optionalPayees = payeesRepo.findPayeesByIdIs(id);
 
         if (optionalPayees.isPresent()) {
             Payees existingPayees = optionalPayees.orElseThrow();
@@ -58,7 +58,7 @@ public class PayeesService {
     }
 
     public void delete(String id) {
-        Optional<Payees> optionalPayees = payeesRepo.findPayeesByIdIs(IDPREFIX + id);
+        Optional<Payees> optionalPayees = payeesRepo.findPayeesByIdIs(id);
         if (optionalPayees.isPresent()) {
             Payees existingPayees = optionalPayees.get();
             existingPayees.setActive(false);

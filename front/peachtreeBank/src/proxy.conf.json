@@ -18,6 +18,16 @@
     "target": "http://localhost:8080/",
     "secure": false,
     "logLevel": "debug"
+  },
+  "/payees/update": {
+    "target": "http://localhost:8080/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/payees/delete": {
+    "target": "http://localhost:8080/",
+    "secure": false,
+    "logLevel": "debug"
   }
 }
 

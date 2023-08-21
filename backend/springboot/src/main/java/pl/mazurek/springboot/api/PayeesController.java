@@ -30,7 +30,7 @@ public class PayeesController {
         payeesService.update(id, payees);
     }
 
-    @PutMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable String id) {
         payeesService.delete(id);
     }

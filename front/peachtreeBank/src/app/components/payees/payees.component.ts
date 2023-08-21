@@ -1,9 +1,13 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {catchError, map, of as observableOf, startWith, Subject, switchMap, takeUntil} from "rxjs";
 import {ClientService} from "../../services/client.service";
 import {MatTableDataSource} from "@angular/material/table";
+import {HttpErrorResponse} from "@angular/common/http";
+import {DialogContentExampleDialog} from "../add-payees/add-payees.component";
+import {MatDialog, MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
 
 @Component({
   selector: 'app-payees',
@@ -17,6 +21,7 @@ export class PayeesComponent implements AfterViewInit {
     'address',
     'accountNumber',
     'active',
+    'actions'
   ];
   dataSource: any = [];
   @ViewChild(MatSort) sort!: MatSort;
@@ -26,9 +31,10 @@ export class PayeesComponent implements AfterViewInit {
   ContentData: any;
   sortedBy = '';
   destroy = new Subject<void>();
+  public editingIndex: number = -1;
 
 
-  constructor(private clientService: ClientService) {
+  constructor(private clientService: ClientService, private dialog: MatDialog) {
   }
 
 
@@ -71,5 +77,62 @@ export class PayeesComponent implements AfterViewInit {
         this.dataSource.sort = this.sort;
       });
   }
+
+  editRow(index: number) {
+    this.editingIndex = index;
+  }
+
+  saveRow(element: any) {
+    this.clientService.updatePayee('/payees/update/' + element.id, element).subscribe(
+      () => {
+        this.editingIndex = -1;
+        this.destroy.next();
+        this.displayData();
+      },
+      (error: HttpErrorResponse) => {
+        this.openDialog();
+      }
+    );
+  }
+
+  cancelEdit(index: number) {
+    this.editingIndex = -1;
+  }
+
+  deleteRow(element: any) {
+    this.clientService.deletePayee('/payees/delete/' + element.id).subscribe(
+      () => {
+        this.editingIndex = -1;
+        this.destroy.next();
+        this.displayData();
+      }
+    );
+  }
+
+  openDialog() {
+    this.dialog.open(DialogContentExampleDialog);
+  }
+
+  openDeleteDialog(element: any) {
+    const dialogRef = this.dialog.open(DialogContentConfirm);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if (result) {
+        this.deleteRow(element);
+      }
+    });
+  }
+
+  protected readonly open = open;
 }
 
+
+@Component({
+  selector: 'dialog-content-confirm',
+  templateUrl: 'dialog-content-confirm.html',
+  standalone: true,
+  imports: [MatDialogModule, MatButtonModule],
+})
+
+export class DialogContentConfirm {
+}

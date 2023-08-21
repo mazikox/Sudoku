@@ -21,11 +21,19 @@ export class ClientService {
     );
   }
 
-  public addUser(url: string, body: Payees){
+  public addPayee(url: string, body: Payees) {
     return this.httpClient.post(url, body).pipe(catchError(this.handleError));
   }
 
-  handleError(error: HttpErrorResponse){
+  public updatePayee(url: string, body: PayeesDto) {
+    return this.httpClient.put(url, body);
+  }
+
+  public deletePayee(url: string){
+    return this.httpClient.delete(url);
+  }
+
+  handleError(error: HttpErrorResponse) {
     return throwError(error)
   }
 }
@@ -75,5 +83,13 @@ export interface Content {
 export interface Payees {
   name: string;
   address: string;
-  accountNumber: string;
+  accountNumber: number;
+}
+
+export interface PayeesDto {
+  id: string;
+  name: string;
+  accountNumber: number;
+  address: string;
+  active: boolean;
 }

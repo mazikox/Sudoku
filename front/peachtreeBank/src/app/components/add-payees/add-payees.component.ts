@@ -20,13 +20,18 @@ export class AddPayeesComponent {
     Validators.required,
     Validators.pattern(/^[A-Za-z\s]+$/)
   ]);
+  accountNumber = new FormControl('', [
+    Validators.required,
+    Validators.pattern('[0-9]{26}')
+  ]);
 
   constructor(private clientService: ClientService, private dialog: MatDialog, private router: Router) {
   }
 
   addPayee(data: NgForm) {
+    console.log(data.value)
     if (data.valid) {
-      this.clientService.addUser("/payees/add", data.value).subscribe((data) => {
+      this.clientService.addPayee("/payees/add", data.value).subscribe((data) => {
           setTimeout(() => {
             this.router.navigate(['/payees']);
           }, 500);
@@ -51,5 +56,6 @@ export class AddPayeesComponent {
   standalone: true,
   imports: [MatDialogModule, MatButtonModule],
 })
+
 export class DialogContentExampleDialog {
 }
