@@ -36,36 +36,36 @@ class PayeesServiceTest {
 
     @Test
     void isNameTooShortOrLong() {
-        Payees payees = new Payees(
-                "Mr",
-                "669 Witting Ferry Apt. 355, North Dayna",
-                "77799744523903246510731838");
+        Payees payees = new Payees();
+        payees.setName("Mr");
+        payees.setAddress("669 Witting Ferry Apt. 355, North Dayna");
+        payees.setAccountNumber("77799744523903246510731838");
 
         assertThrows(ResponseStatusException.class, () -> payeesService.addPayees(payees));
 
-        Payees payees2 = new Payees(
-                "Mrgdsgsdgsdgsdgsdgsdgsddgsdgsdgsdgsd",
-                "669 Witting Ferry Apt. 355, North Dayna",
-                "77799744523903246510731838");
+        Payees payees2 = new Payees();
+        payees2.setName("Mrgdsgsdgsdgsdgsdgsdgsddgsdgsdgsdgsd");
+        payees2.setAddress("669 Witting Ferry Apt. 355, North Dayna");
+        payees2.setAccountNumber("77799744523903246510731838");
 
         assertThrows(ResponseStatusException.class, () -> payeesService.addPayees(payees2));
     }
 
     @Test
     void addWithoutNecessaryField() {
-        Payees payees = new Payees(null,
-                "669 Witting Ferry Apt. 355, North Dayna",
-                "77799744523903246510731838");
+        Payees payees = new Payees();
+        payees.setAddress("669 Witting Ferry Apt. 355, North Dayna");
+        payees.setAccountNumber("77799744523903246510731838");
         assertThrows(ResponseStatusException.class, () -> payeesService.addPayees(payees));
 
-        Payees payees2 = new Payees("Mr World",
-                null,
-                "77799744523903246510731838");
+        Payees payees2 = new Payees();
+        payees2.setName("Mr World");
+        payees2.setAccountNumber("77799744523903246510731838");
         assertThrows(ResponseStatusException.class, () -> payeesService.addPayees(payees2));
 
-        Payees payees3 = new Payees("Mr World",
-                "669 Witting Ferry Apt. 355, North Dayna",
-                null);
+        Payees payees3 = new Payees();
+        payees3.setName("Mr World");
+        payees3.setAddress("669 Witting Ferry Apt. 355, North Dayna");
         assertThrows(ResponseStatusException.class, () -> payeesService.addPayees(payees3));
 
     }
@@ -106,9 +106,11 @@ class PayeesServiceTest {
     @Test
     void isUpdating() {
         addUser();
-        Payees newPayee = new Payees("Mr. Amari Kunde",
-                "6690 Kshlerin Shoal, Port Lelandside, OR 03408",
-                "72503274082283365628773110");
+        Payees newPayee = new Payees();
+        newPayee.setName("Mr World");
+        newPayee.setAddress("669 Witting Ferry Apt. 355, North Dayna");
+        newPayee.setAccountNumber("77799744523903246510731838");
+
         payeesService.update("1", newPayee);
         payeesService.findById("1").ifPresent(foundPayee -> {
             assertEquals(newPayee.getName(), foundPayee.getName());
@@ -121,10 +123,10 @@ class PayeesServiceTest {
 
 
     Payees addUser() {
-        Payees payees = new Payees(
-                "Mr World",
-                "669 Witting Ferry Apt. 355, North Dayna",
-                "77799744523903246510731838");
+        Payees payees = new Payees();
+        payees.setName("Mr World");
+        payees.setAddress("669 Witting Ferry Apt. 355, North Dayna");
+        payees.setAccountNumber("77799744523903246510731838");
 
         payeesService.addPayees(payees);
         return payees;

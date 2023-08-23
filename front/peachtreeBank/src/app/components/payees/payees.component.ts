@@ -1,20 +1,18 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
-import {catchError, map, of as observableOf, startWith, Subject, switchMap, takeUntil} from "rxjs";
 import {ClientService} from "../../services/client.service";
-import {MatTableDataSource} from "@angular/material/table";
-import {HttpErrorResponse} from "@angular/common/http";
 import {DialogContentExampleDialog} from "../add-payees/add-payees.component";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
+import {DataProcessor} from "../../services/data-processor";
+import {takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-payees',
   templateUrl: './payees.component.html',
   styleUrls: ['./payees.component.scss']
 })
-export class PayeesComponent implements AfterViewInit {
+export class PayeesComponent extends DataProcessor implements AfterViewInit {
   displayColumn: string[] = [
     'id',
     'name',
@@ -23,88 +21,54 @@ export class PayeesComponent implements AfterViewInit {
     'active',
     'actions'
   ];
-  dataSource: any = [];
-  @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  totalElements: any;
-  pageSize: any;
-  ContentData: any;
-  sortedBy = '';
-  destroy = new Subject<void>();
+
   public editingIndex: number = -1;
+  @ViewChild(MatPaginator) override paginator!: MatPaginator;
 
 
-  constructor(private clientService: ClientService, private dialog: MatDialog) {
+  constructor(clientService: ClientService, private dialog: MatDialog) {
+    super(clientService);
   }
 
-
-  getTableData$(pageNumber: number) {
-    return this.clientService.getApi('/payees/get', pageNumber, 5, this.sortedBy);
-  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.displayData();
+    this.processTableData(this.paginator, this.sort, this.PAYEES);
   }
 
-  applySort(event: Event) {
-    this.sortedBy = (event.target as HTMLInputElement).value;
-    this.destroy.next();
-    this.displayData();
-  }
-
-  displayData() {
-    this.paginator.page
-      .pipe(
-        startWith({}),
-        switchMap(() => {
-          return this.getTableData$(this.paginator.pageIndex).pipe(
-            catchError(() => observableOf(null))
-          );
-        }),
-        map((contentData) => {
-          if (contentData == null) return [];
-          this.totalElements = contentData.totalElements;
-          this.pageSize = contentData.size;
-          console.log('totaldata' + this.totalElements);
-          return contentData.content;
-        }),
-        takeUntil(this.destroy)
-      )
-      .subscribe((contData) => {
-        this.ContentData = contData;
-        this.dataSource = new MatTableDataSource(this.ContentData);
-        this.dataSource.sort = this.sort;
-      });
+  override applySort(event: Event) {
+    super.applySort(event, this.paginator, this.sort);
   }
 
   editRow(index: number) {
     this.editingIndex = index;
   }
 
+  cancelEditRow() {
+    this.editingIndex = -1;
+  }
+
   saveRow(element: any) {
-    this.clientService.updatePayee('/payees/update/' + element.id, element).subscribe(
+    this.clientService.updatePayee('/payees/update/' + element.id, element)
+      .pipe(takeUntil(this.destroy))
+      .subscribe(
       () => {
-        this.editingIndex = -1;
+        this.cancelEditRow();
         this.destroy.next();
-        this.displayData();
+        this.processTableData(this.paginator, this.sort, this.PAYEES);
       },
-      (error: HttpErrorResponse) => {
+      () => {
         this.openDialog();
       }
     );
   }
 
-  cancelEdit(index: number) {
-    this.editingIndex = -1;
-  }
-
   deleteRow(element: any) {
     this.clientService.deletePayee('/payees/delete/' + element.id).subscribe(
       () => {
-        this.editingIndex = -1;
+        this.cancelEditRow();
         this.destroy.next();
-        this.displayData();
+        this.processTableData(this.paginator, this.sort, this.PAYEES);
       }
     );
   }
@@ -116,14 +80,11 @@ export class PayeesComponent implements AfterViewInit {
   openDeleteDialog(element: any) {
     const dialogRef = this.dialog.open(DialogContentConfirm);
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
       if (result) {
         this.deleteRow(element);
       }
     });
   }
-
-  protected readonly open = open;
 }
 
 

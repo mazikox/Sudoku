@@ -20,16 +20,16 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class PayeesService {
 
     private final PayeesRepo payeesRepo;
-    private static final String IDPREFIX = "PB_PAYEE_";
+    static final String IDPREFIX = "PB_PAYEE_";
 
     private static final AtomicInteger COUNTER = new AtomicInteger(0);
-
 
 
     public void addPayees(Payees payees) {
         try {
             payeesRepo.save(payees);
-        }catch (TransactionSystemException e){throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong body", e);
+        } catch (TransactionSystemException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Wrong body", e);
         }
     }
 

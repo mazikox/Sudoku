@@ -15,7 +15,7 @@
   <br>
   <mat-form-field>
     <input matInput type="text" ngModel name="accountNumber" id="accountNumber" placeholder="Enter Account number"
-           required minlength="26" maxlength="26" [pattern]="'[0-9]{26}'">
+           required minlength="26" maxlength="26">
     <mat-icon matSuffix>account_balance_wallet</mat-icon>
     <mat-error *ngIf="accountNumber.invalid">Required 26 number of chars. Only numbers</mat-error>
   </mat-form-field>

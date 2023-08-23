@@ -1,5 +1,5 @@
-import {Injectable, numberAttribute} from '@angular/core';
-import {HttpClient, HttpClientModule, HttpErrorResponse} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
 
 @Injectable({
@@ -11,13 +11,13 @@ export class ClientService {
 
   public getApiCategoryCode(url: string, page: number, pageSize: number, categoryCode: string, sortedBy: string): Observable<RootObject> {
     return this.httpClient.get<RootObject>(
-      url + '?page=' + page + '&pageSize=' + pageSize + '&categoryCode=' + categoryCode + '&sort=' + sortedBy
+      `${url}?page=${page}&pageSize=${pageSize}&categoryCode=${categoryCode}&sort=${sortedBy}`
     );
   }
 
-  public getApi(url: string, page: number, pageSize: number, sortedBy: string): Observable<RootObject> {
+  public getApiTransactions(url: string, page: number, pageSize: number, sortedBy: string): Observable<RootObject> {
     return this.httpClient.get<RootObject>(
-      url + '?page=' + page + '&pageSize=' + pageSize + '&sort=' + sortedBy
+      `${url}?page=${page}&pageSize=${pageSize}&sort=${sortedBy}`
     );
   }
 

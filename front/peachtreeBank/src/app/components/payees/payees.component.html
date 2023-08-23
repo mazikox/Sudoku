@@ -5,6 +5,7 @@
 
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
     <td mat-cell *matCellDef="let element">{{ element.id }}</td>
@@ -16,6 +17,7 @@
       <ng-container *ngIf="editingIndex !== i; else editMode">
         {{ element.name }}
       </ng-container>
+
       <ng-template #editMode>
         <mat-form-field>
           <input matInput type="text" [(ngModel)]="element.name" required minlength="5" maxlength="30"/>
@@ -31,6 +33,7 @@
       <ng-container *ngIf="editingIndex !== i; else editMode">
         {{ element.address }}
       </ng-container>
+
       <ng-template #editMode>
         <mat-form-field>
           <input matInput type="text" [(ngModel)]="element.address" required minlength="10" maxlength="100">
@@ -44,11 +47,12 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header>accountNumber</th>
     <td mat-cell *matCellDef="let element; let i = index">
       <ng-container *ngIf="editingIndex !== i; else editMode">
-        {{ element.accountNumber }}
+        {{ element["accountNumber"] }}
       </ng-container>
+
       <ng-template #editMode>
         <mat-form-field>
-          <input matInput type="text" [(ngModel)]="element.accountNumber" required minlength="26" maxlength="26"/>
+          <input matInput type="text" [(ngModel)]="element['accountNumber']" required minlength="26" maxlength="26"/>
           <mat-error *ngIf="element.address.invalid">Required 26 number of chars</mat-error>
         </mat-form-field>
       </ng-template>
@@ -74,7 +78,7 @@
         <button mat-icon-button matTooltip="Save" (click)="saveRow(element)">
           <mat-icon class="icon_update_button">save</mat-icon>
         </button>
-        <button mat-icon-button matTooltip="Cancel" (click)="cancelEdit(i)">
+        <button mat-icon-button matTooltip="Cancel" (click)="cancelEditRow()">
           <mat-icon class="icon_cancel_button">cancel</mat-icon>
         </button>
         <button mat-icon-button matTooltip="Delete" (click)="openDeleteDialog(element)">

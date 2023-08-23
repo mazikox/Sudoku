@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {BackComponent} from './components/back/back.component';
+import {BackComponent} from './components/transaction/back.component';
 import {PayeesComponent} from "./components/payees/payees.component";
 import {AddPayeesComponent} from "./components/add-payees/add-payees.component";
 

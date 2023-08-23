@@ -38,10 +38,4 @@ public class Payees {
     @NotNull
     private String accountNumber;
     private boolean active = true;
-
-    public Payees(String name, String address, String accountNumber) {
-        this.name = name;
-        this.address = address;
-        this.accountNumber = accountNumber;
-    }
 }

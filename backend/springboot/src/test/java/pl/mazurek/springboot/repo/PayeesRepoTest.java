@@ -28,10 +28,11 @@ class PayeesRepoTest {
     @Test
     void checkIsPayeesMadeCorrect() {
         //give
-        Payees payees = new Payees(
-                "Mr. Dusty Gaylord",
-                "669 Witting Ferry Apt. 355, North Dayna",
-                "77799744523903246510731838");
+        Payees payees = new Payees();
+        payees.setName("Mr. Dusty Lord");
+        payees.setAddress("669 Witting Ferry Apt. 355, North Dayna");
+        payees.setAccountNumber("77799744523903246510731838");
+
         underTest.save(payees);
         //when
         Optional<Payees> expected = underTest.findPayeesByIdIs("PB_PAYEE_00001");

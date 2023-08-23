@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {ClientService, Payees} from "../../services/client.service";
+import {Component} from '@angular/core';
+import {ClientService} from "../../services/client.service";
 import {FormControl, NgForm, Validators} from "@angular/forms";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {Router} from "@angular/router";
+import {takeUntil} from "rxjs";
 
 
 @Component({
@@ -31,7 +32,7 @@ export class AddPayeesComponent {
   addPayee(data: NgForm) {
     console.log(data.value)
     if (data.valid) {
-      this.clientService.addPayee("/payees/add", data.value).subscribe((data) => {
+      this.clientService.addPayee("/payees/add", data.value).pipe().subscribe((data) => {
           setTimeout(() => {
             this.router.navigate(['/payees']);
           }, 500);
