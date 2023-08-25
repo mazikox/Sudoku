@@ -23,7 +23,7 @@ export class PayeesComponent extends DataProcessor implements AfterViewInit {
   ];
 
   public editingIndex: number = -1;
-  @ViewChild(MatPaginator) override paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
 
   constructor(clientService: ClientService, private dialog: MatDialog) {
@@ -32,7 +32,6 @@ export class PayeesComponent extends DataProcessor implements AfterViewInit {
 
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.processTableData(this.paginator, this.sort, this.PAYEES);
   }
 

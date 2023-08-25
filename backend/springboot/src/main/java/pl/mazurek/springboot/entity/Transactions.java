@@ -14,7 +14,7 @@ public class Transactions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne
+    @OneToOne()
     @JoinColumn(name = "category_code_id")
     private Categories categoryCode;
     private Long date;

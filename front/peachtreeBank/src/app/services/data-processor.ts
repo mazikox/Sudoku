@@ -3,28 +3,28 @@ import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {catchError, map, of as observableOf, startWith, Subject, switchMap, takeUntil} from "rxjs";
 import {MatTableDataSource} from "@angular/material/table";
-import {ClientService} from "./client.service";
+import {Category, ClientService} from "./client.service";
 
 @Injectable()
-export abstract class DataProcessor implements OnDestroy {
+export class DataProcessor implements OnDestroy {
 
   TRANSACTION: number = 1;
   PAYEES: number = 2;
+  ACCOUNT: number = 3;
   STATUS: number = -1;
 
   totalElements: any;
   pageSize: any;
   dataSource: any = [];
-  ContentData: any;
+  contentData: any;
   sortedBy = '';
   categoryCode = '';
   destroy = new Subject<void>();
 
+
   @ViewChild(MatSort) sort!: MatSort;
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-
-  protected constructor(public clientService: ClientService) {
+  public constructor(public clientService: ClientService) {
   }
 
 
@@ -47,30 +47,37 @@ export abstract class DataProcessor implements OnDestroy {
           if (contentData == null) return [];
           this.totalElements = contentData.totalElements;
           this.pageSize = contentData.size;
-          console.log('totaldata' + this.totalElements);
           return contentData.content;
         }),
         takeUntil(this.destroy)
       )
       .subscribe((contData) => {
-        this.ContentData = contData;
-        this.dataSource = new MatTableDataSource(this.ContentData);
+        this.contentData = contData;
+        this.dataSource = new MatTableDataSource(this.contentData);
         this.dataSource.sort = sort;
+        console.log(this.dataSource.data);
       });
   }
 
   getTableData$(pageNumber: number) {
     switch (this.STATUS) {
       case this.TRANSACTION: {
-        return this.clientService.getApiCategoryCode('/transactions/get', pageNumber, 2, this.categoryCode, this.sortedBy);
+        return this.clientService.getApiTransactions('/transactions/get', pageNumber, 5, this.categoryCode, this.sortedBy);
       }
       case this.PAYEES: {
-        return this.clientService.getApiTransactions('/payees/get', pageNumber, 5, this.sortedBy);
+        return this.clientService.getApi('/payees/get', pageNumber, 5, this.sortedBy);
+      }
+      case this.ACCOUNT: {
+        return this.clientService.getApi('/accounts/get', pageNumber, 5, this.sortedBy);
       }
       default: {
-        return this.clientService.getApiTransactions('/payees/get', pageNumber, 5, this.sortedBy);
+        return this.clientService.getApi('/payees/get', pageNumber, 5, this.sortedBy);
       }
     }
+  }
+
+  processCategoriesData(){
+    return this.clientService.getCategories();
   }
 
   applySort(event: Event, paginator: MatPaginator, sort: MatSort) {

@@ -3,10 +3,7 @@ package pl.mazurek.springboot.api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.mazurek.springboot.entity.Transactions;
 import pl.mazurek.springboot.entity.TransactionDto;
 import pl.mazurek.springboot.service.TransactionsService;
@@ -38,5 +35,9 @@ public class TransactionsController {
         transactionsService.fillFromJson();
     }
 
+    @PostMapping("/add")
+    public void add(@RequestBody Transactions transaction){
+        transactionsService.save(transaction);
+    }
 
 }

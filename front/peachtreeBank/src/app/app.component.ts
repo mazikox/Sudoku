@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   }
 
   public getMethod() {
-    this.http.get('/appversion', { responseType: 'text' }).subscribe((data) => {
+    this.http.get('/appversion', { responseType: 'text' }).subscribe(data => {
       this.data = data;
       console.log(data);
     });

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {catchError, Observable, throwError} from 'rxjs';
+import {catchError, Observable, pipe, throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -9,20 +9,28 @@ export class ClientService {
   constructor(private httpClient: HttpClient) {
   }
 
-  public getApiCategoryCode(url: string, page: number, pageSize: number, categoryCode: string, sortedBy: string): Observable<RootObject> {
+  public getApiTransactions(url: string, page: number, pageSize: number, categoryCode: string, sortedBy: string): Observable<RootObject> {
     return this.httpClient.get<RootObject>(
       `${url}?page=${page}&pageSize=${pageSize}&categoryCode=${categoryCode}&sort=${sortedBy}`
     );
   }
 
-  public getApiTransactions(url: string, page: number, pageSize: number, sortedBy: string): Observable<RootObject> {
+  public getApi(url: string, page: number, pageSize: number, sortedBy: string): Observable<RootObject> {
     return this.httpClient.get<RootObject>(
       `${url}?page=${page}&pageSize=${pageSize}&sort=${sortedBy}`
     );
   }
 
-  public addPayee(url: string, body: Payees) {
-    return this.httpClient.post(url, body).pipe(catchError(this.handleError));
+  public getCategories(): Observable<Category[]> {
+    return this.httpClient.get<Category[]>('/categories/all');
+  }
+
+  public addPayee(body: Payees) {
+    return this.httpClient.post("/payees/add", body).pipe(catchError(this.handleError));
+  }
+
+  public addTransaction(body: Payees) {
+    return this.httpClient.post("/transactions/add", body).pipe(catchError(this.handleError));
   }
 
   public updatePayee(url: string, body: PayeesDto) {
@@ -68,6 +76,10 @@ export interface Sort {
 }
 
 export interface Content {
+}
+
+
+export interface Transaction {
   id: number;
   categoryCode: string;
   date: string;
@@ -80,6 +92,11 @@ export interface Content {
   title: string;
 }
 
+
+export interface Category {
+  categoryCodeId: number;
+  name: string;
+}
 export interface Payees {
   name: string;
   address: string;
@@ -92,4 +109,10 @@ export interface PayeesDto {
   accountNumber: number;
   address: string;
   active: boolean;
+}
+
+export interface Account {
+  id: number;
+  accountNumber: string;
+  balance: number;
 }

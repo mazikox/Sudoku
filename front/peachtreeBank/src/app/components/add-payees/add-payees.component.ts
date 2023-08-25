@@ -14,16 +14,13 @@ import {takeUntil} from "rxjs";
 })
 export class AddPayeesComponent {
   name = new FormControl('', [
-    Validators.required,
-    Validators.pattern(/^[A-Za-z\s]+$/)
+    Validators.required
   ]);
   address = new FormControl('', [
-    Validators.required,
-    Validators.pattern(/^[A-Za-z\s]+$/)
+    Validators.required
   ]);
   accountNumber = new FormControl('', [
-    Validators.required,
-    Validators.pattern('[0-9]{26}')
+    Validators.required
   ]);
 
   constructor(private clientService: ClientService, private dialog: MatDialog, private router: Router) {
@@ -32,12 +29,12 @@ export class AddPayeesComponent {
   addPayee(data: NgForm) {
     console.log(data.value)
     if (data.valid) {
-      this.clientService.addPayee("/payees/add", data.value).pipe().subscribe((data) => {
+      this.clientService.addPayee(data.value).pipe().subscribe((data) => {
           setTimeout(() => {
-            this.router.navigate(['/payees']);
+            this.router.navigate(['/transactions']);
           }, 500);
         },
-        (error) => {
+        () => {
           this.openDialog();
         });
 

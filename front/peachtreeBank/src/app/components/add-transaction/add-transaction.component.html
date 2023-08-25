@@ -1,0 +1,68 @@
+<form #usersForm="ngForm" (ngSubmit)="addTransaction(usersForm)">
+
+  <mat-form-field>
+    <mat-select ngModel name="originatorAccountNumber" placeholder="CHOOSE YOUR ACCOUNT" required>
+      <mat-option *ngFor="let element of account" [value]="element.id">
+        {{element["accountNumber"]}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="required.invalid">Required </mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-select ngModel name="counterpartyAccount" placeholder="CHOOSE YOUR PAYEE" required>
+      <mat-option *ngFor="let element of payee" [value]="element.accountNumber">
+        {{element.name}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="required.invalid">Required </mat-error>
+  </mat-form-field>
+
+  <br>
+  <mat-form-field>
+    <input matInput type="text" ngModel name="amount" placeholder="Enter amount"
+           required="true" minlength="10" maxlength="100">
+    <mat-error *ngIf="required.invalid">Required</mat-error>
+    <mat-icon matSuffix>home</mat-icon>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput type="text" ngModel name="title" placeholder="Enter title"
+           required minlength="5" maxlength="100">
+    <mat-error *ngIf="required.invalid">Required </mat-error>
+    <mat-icon matSuffix>home</mat-icon>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput type="text" ngModel name="paymentType" placeholder="Enter paymentType"
+           required minlength="5" maxlength="100">
+    <mat-icon matSuffix>home</mat-icon>
+    <mat-error *ngIf="required.invalid">Required </mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-select ngModel name="currencyCode" placeholder="Currency Code" required>
+      <mat-option value="USD">USD</mat-option>
+      <mat-option value="EUR">EUR</mat-option>
+      <mat-option value="PLN">PLN</mat-option>
+    </mat-select>
+    <mat-error *ngIf="required.invalid">Required </mat-error>
+    <!--    <mat-icon> money</mat-icon>-->
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-select ngModel name="categoryCode" placeholder="Category" required>
+      <mat-option *ngFor="let element of categories" [value]="element">
+        {{element.name}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="required.invalid">Required </mat-error>
+  </mat-form-field>
+  <br>
+  <br>
+  <button mat-raised-button>Add new</button>
+</form>
+
+
+<mat-paginator>
+</mat-paginator>

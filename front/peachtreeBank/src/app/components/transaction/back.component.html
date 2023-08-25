@@ -7,7 +7,7 @@
   <input matInput (keyup.enter)="applySort($event)" placeholder="sort" />
 </mat-form-field>
 
-<table mat-table [dataSource]="dataSource.data" class="mat-elevation-z8" matSort>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
@@ -72,4 +72,5 @@
   [length]="totalElements"
   [pageSize]="pageSize"
   aria-label="Page"
-></mat-paginator>
+>
+</mat-paginator>

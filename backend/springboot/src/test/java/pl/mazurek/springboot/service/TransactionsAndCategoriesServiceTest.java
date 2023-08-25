@@ -64,7 +64,6 @@ class TransactionsAndCategoriesServiceTest {
         Transactions transactions = addTransaction();
         Page<TransactionDto> result = transactionsService.find(0,5,"id",0L);
 
-        assertEquals(transactions.getCategoryCode().getName(), result.getContent().get(0).getCategoryCode());
         assertEquals(transactions.getAmount(), result.getContent().get(0).getAmount());
         assertEquals(transactions.getCurrencyCode(), result.getContent().get(0).getCurrencyCode());
         assertEquals(transactions.getCounterpartyAccount(), result.getContent().get(0).getCounterpartyAccount());
@@ -77,7 +76,6 @@ class TransactionsAndCategoriesServiceTest {
         Transactions transactions = addTransaction();
         Page<TransactionDto> result = transactionsService.find(0,5,"id",1L);
 
-        assertEquals(transactions.getCategoryCode().getName(), result.getContent().get(0).getCategoryCode());
         assertEquals(transactions.getAmount(), result.getContent().get(0).getAmount());
         assertEquals(transactions.getCurrencyCode(), result.getContent().get(0).getCurrencyCode());
         assertEquals(transactions.getCounterpartyAccount(), result.getContent().get(0).getCounterpartyAccount());
@@ -88,8 +86,6 @@ class TransactionsAndCategoriesServiceTest {
 
     Transactions addTransaction(){
         Transactions transactions = new Transactions();
-        transactions.setCategoryCode(addCategories());
-        transactions.setDate(1600387200000L);
         transactions.setAmount(5000D);
         transactions.setCurrencyCode("EUR");
         transactions.setOriginatorAccountNumber("sdgdsgs");

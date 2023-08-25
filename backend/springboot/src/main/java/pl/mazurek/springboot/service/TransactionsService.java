@@ -17,6 +17,7 @@ import pl.mazurek.springboot.repo.TransactionRepo;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +34,8 @@ public class TransactionsService {
     }
 
     public void save(Transactions transactions) {
+        transactions.setStatus("ENTERED");
+        transactions.setDate(Instant.now().getEpochSecond() * 1000);
         transactionRepo.save(transactions);
     }
 
@@ -46,6 +49,10 @@ public class TransactionsService {
 
     public Optional<Transactions> findById(Long id){
         return transactionRepo.findById(id);
+    }
+
+    public void add(Transactions transaction){
+        transactionRepo.save(transaction);
     }
 
 

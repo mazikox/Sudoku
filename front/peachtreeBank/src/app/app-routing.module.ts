@@ -3,6 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {BackComponent} from './components/transaction/back.component';
 import {PayeesComponent} from "./components/payees/payees.component";
 import {AddPayeesComponent} from "./components/add-payees/add-payees.component";
+import {AccountsComponent} from "./components/accounts/accounts.component";
+import {AddTransactionComponent} from "./components/add-transaction/add-transaction.component";
 
 const routes: Routes = [
   {
@@ -14,9 +16,17 @@ const routes: Routes = [
     component: PayeesComponent,
   },
   {
-    path: 'add',
+    path: 'add-payee',
     component: AddPayeesComponent,
   },
+  {
+    path: 'accounts',
+    component: AccountsComponent,
+  },
+  {
+    path: 'add-transaction',
+    component: AddTransactionComponent,
+  }
 ];
 
 @NgModule({

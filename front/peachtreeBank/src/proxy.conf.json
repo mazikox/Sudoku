@@ -4,6 +4,11 @@
     "secure": false,
     "logLevel": "debug"
   },
+  "/transactions/add": {
+    "target": "http://localhost:8080/",
+    "secure": false,
+    "logLevel": "debug"
+  },
   "/appversion": {
     "target": "http://localhost:8080/",
     "secure": false,
@@ -25,6 +30,21 @@
     "logLevel": "debug"
   },
   "/payees/delete": {
+    "target": "http://localhost:8080/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/accounts/get": {
+    "target": "http://localhost:8080/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/accounts/add": {
+    "target": "http://localhost:8080/",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/categories/all": {
     "target": "http://localhost:8080/",
     "secure": false,
     "logLevel": "debug"

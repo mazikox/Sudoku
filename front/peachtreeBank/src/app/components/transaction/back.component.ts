@@ -22,14 +22,13 @@ export class BackComponent extends DataProcessor implements AfterViewInit {
     'status',
     'title',
   ];
-  @ViewChild(MatPaginator) override paginator!: MatPaginator
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(clientService: ClientService) {
     super(clientService);
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
     this.processTableData(this.paginator, this.sort, this.TRANSACTION);
   }
 
