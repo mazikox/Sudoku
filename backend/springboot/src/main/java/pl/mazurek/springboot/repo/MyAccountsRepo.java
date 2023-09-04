@@ -1,7 +1,11 @@
 package pl.mazurek.springboot.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pl.mazurek.springboot.entity.MyAccounts;
+import org.springframework.stereotype.Repository;
+import pl.mazurek.springboot.entity.MyAccount;
 
-public interface MyAccountsRepo extends JpaRepository<MyAccounts, Long> {
+@Repository
+public interface MyAccountsRepo extends JpaRepository<MyAccount, Long> {
+
+    MyAccount findByAccountNumber(String originatorAccountNumber);
 }

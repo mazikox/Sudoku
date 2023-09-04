@@ -1,26 +1,30 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Observable} from "rxjs";
+import {ClientService} from "./services/client.service";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   title = 'peachtreeBank';
 
   public data: any;
 
-  constructor(private http: HttpClient) {}
+  number$!: Observable<number>;
+  balance: any;
+
+  constructor(private clientService: ClientService) {
+  }
 
   ngOnInit(): void {
-    this.getMethod();
+    this.clientService.getVersion().subscribe((data) => this.data = data);
+    this.clientService.getAccountBalance().subscribe((data) => this.balance = data)
   }
 
-  public getMethod() {
-    this.http.get('/appversion', { responseType: 'text' }).subscribe(data => {
-      this.data = data;
-      console.log(data);
-    });
+  ngAfterViewInit(): void {
   }
+
+
 }

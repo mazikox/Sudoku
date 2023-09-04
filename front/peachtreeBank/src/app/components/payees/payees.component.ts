@@ -5,7 +5,8 @@ import {DialogContentExampleDialog} from "../add-payees/add-payees.component";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {DataProcessor} from "../../services/data-processor";
-import {takeUntil} from "rxjs";
+import {take, takeUntil} from "rxjs";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-payees',
@@ -18,12 +19,12 @@ export class PayeesComponent extends DataProcessor implements AfterViewInit {
     'name',
     'address',
     'accountNumber',
-    'active',
     'actions'
   ];
 
   public editingIndex: number = -1;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
 
   constructor(clientService: ClientService, private dialog: MatDialog) {
@@ -50,20 +51,20 @@ export class PayeesComponent extends DataProcessor implements AfterViewInit {
   saveRow(element: any) {
     this.clientService.updatePayee('/payees/update/' + element.id, element)
       .pipe(takeUntil(this.destroy))
-      .subscribe(
-      () => {
-        this.cancelEditRow();
-        this.destroy.next();
-        this.processTableData(this.paginator, this.sort, this.PAYEES);
-      },
-      () => {
-        this.openDialog();
-      }
-    );
+      .subscribe({
+        next: () => {
+          this.cancelEditRow();
+          this.destroy.next();
+          this.processTableData(this.paginator, this.sort, this.PAYEES);
+        },
+        error: () => {
+          this.openDialog();
+        }
+      });
   }
 
   deleteRow(element: any) {
-    this.clientService.deletePayee('/payees/delete/' + element.id).subscribe(
+    this.clientService.deletePayee('/payees/delete/' + element.id).pipe(takeUntil(this.destroy)).subscribe(
       () => {
         this.cancelEditRow();
         this.destroy.next();

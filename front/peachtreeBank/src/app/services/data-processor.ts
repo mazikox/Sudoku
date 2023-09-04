@@ -1,9 +1,9 @@
-import {Injectable, OnDestroy, OnInit, ViewChild} from "@angular/core";
+import {Injectable, OnDestroy} from "@angular/core";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
-import {catchError, map, of as observableOf, startWith, Subject, switchMap, takeUntil} from "rxjs";
+import {catchError, map, of as observableOf, startWith, Subject, Subscription, switchMap, takeUntil} from "rxjs";
 import {MatTableDataSource} from "@angular/material/table";
-import {Category, ClientService} from "./client.service";
+import {ClientService} from "./client.service";
 
 @Injectable()
 export class DataProcessor implements OnDestroy {
@@ -21,8 +21,7 @@ export class DataProcessor implements OnDestroy {
   categoryCode = '';
   destroy = new Subject<void>();
 
-
-  @ViewChild(MatSort) sort!: MatSort;
+  private dataProcessed = new Subject<void>();
 
   public constructor(public clientService: ClientService) {
   }
@@ -55,14 +54,14 @@ export class DataProcessor implements OnDestroy {
         this.contentData = contData;
         this.dataSource = new MatTableDataSource(this.contentData);
         this.dataSource.sort = sort;
-        console.log(this.dataSource.data);
+        this.dataProcessed.next();
       });
   }
 
   getTableData$(pageNumber: number) {
     switch (this.STATUS) {
       case this.TRANSACTION: {
-        return this.clientService.getApiTransactions('/transactions/get', pageNumber, 5, this.categoryCode, this.sortedBy);
+        return this.clientService.getApiTransactions('/transactions/get', pageNumber, 10, this.categoryCode, this.sortedBy);
       }
       case this.PAYEES: {
         return this.clientService.getApi('/payees/get', pageNumber, 5, this.sortedBy);

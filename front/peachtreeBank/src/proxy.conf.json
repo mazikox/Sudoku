@@ -44,6 +44,11 @@
     "secure": false,
     "logLevel": "debug"
   },
+  "/accounts/countBalance": {
+    "target": "http://localhost:8080/",
+    "secure": false,
+    "logLevel": "debug"
+  },
   "/categories/all": {
     "target": "http://localhost:8080/",
     "secure": false,

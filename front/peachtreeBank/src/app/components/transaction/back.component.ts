@@ -23,6 +23,8 @@ export class BackComponent extends DataProcessor implements AfterViewInit {
     'title',
   ];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+
 
   constructor(clientService: ClientService) {
     super(clientService);

@@ -54,7 +54,7 @@ public class PayeesService {
 
     public Page<Payees> find(int page, int size, String sort) {
         PageRequest pr = sort.equals("") ? PageRequest.of(page, size) : PageRequest.of(page, size, Sort.by(sort));
-        return payeesRepo.findAll(pr);
+        return payeesRepo.findPayeesByActive(pr, true);
     }
 
     public void delete(String id) {

@@ -41,6 +41,14 @@ export class ClientService {
     return this.httpClient.delete(url);
   }
 
+  public getAccountBalance(){
+    return this.httpClient.get("accounts/countBalance");
+  }
+
+  public getVersion() {
+    return this.httpClient.get('/appversion', { responseType: 'text' });
+    }
+
   handleError(error: HttpErrorResponse) {
     return throwError(error)
   }
@@ -113,6 +121,8 @@ export interface PayeesDto {
 
 export interface Account {
   id: number;
+  name: string;
   accountNumber: string;
+  currency: string;
   balance: number;
 }

@@ -1,13 +1,19 @@
 package pl.mazurek.springboot.entity;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 
 @Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Transactions {
 
 
@@ -19,7 +25,7 @@ public class Transactions {
     private Categories categoryCode;
     private Long date;
     private Double amount;
-    private String currencyCode;
+    private Currency currencyCode;
     private String originatorAccountNumber;
     private String counterpartyAccount;
     private String paymentType;

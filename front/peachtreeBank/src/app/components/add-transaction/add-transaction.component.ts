@@ -6,6 +6,8 @@ import {Router} from "@angular/router";
 import {DataProcessor} from "../../services/data-processor";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatButtonModule} from "@angular/material/button";
+import {MatSort} from "@angular/material/sort";
+import {takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-add-transaction',
@@ -14,73 +16,50 @@ import {MatButtonModule} from "@angular/material/button";
 })
 export class AddTransactionComponent implements AfterViewInit {
 
-  name = new FormControl('', [
-    Validators.required
-  ]);
-  address = new FormControl('', [
-    Validators.required
-  ]);
   required = new FormControl('', [
-    Validators.required
+    Validators.required,
   ]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  account: Account[] = [];
-  payee: Payees[] = [];
+  @ViewChild(MatSort) sort!: MatSort;
   categories: Category[] = [];
-  dataProcess: any;
+  dataProcess: DataProcessor;
   accountProcessor: any;
   payeeProcessor: any;
+  selectedAccountNumber: any;
 
 
   constructor(clientService: ClientService, private dialog: MatDialog, private router: Router) {
-    this.dataProcess = new DataProcessor(clientService);
     this.accountProcessor = new DataProcessor(clientService);
     this.payeeProcessor = new DataProcessor(clientService);
+    this.dataProcess = new DataProcessor(clientService);
   }
 
   ngAfterViewInit() {
+    this.accountProcessor.processTableData(this.paginator, this.sort, this.dataProcess.ACCOUNT);
+    this.payeeProcessor.processTableData(this.paginator, this.sort, this.dataProcess.PAYEES);
     this.dataProcess.processCategoriesData().subscribe((data: Category[]) => {
       this.categories = data;
-      console.log(this.categories);
     });
-    this.fetchAccount();
-    this.fetchPayee();
   }
 
   addTransaction(data: NgForm) {
-    console.log(data.value);
     if (data.valid) {
-      this.dataProcess.clientService.addTransaction(data.value).subscribe(() => {
+      this.dataProcess.clientService.addTransaction(data.value).pipe(takeUntil(this.dataProcess.destroy)).subscribe({
+        next: () => {
           setTimeout(() => {
-            this.router.navigate(['/payees']);
+            this.router.navigate(['/transactions']);
           }, 500);
         },
-        () => {
+        error: () => {
           this.openDialog();
-        });
-
+        }
+      });
     } else {
       this.openDialog();
     }
   }
 
-  fetchAccount() {
-    this.accountProcessor.processTableData(this.paginator, this.dataProcess.sort, this.dataProcess.ACCOUNT);
-    this.account = this.accountProcessor.dataSource;
-    setTimeout(() => {
-      this.account = this.accountProcessor.contentData;
-    }, 1000);
-  }
-
-   fetchPayee() {
-    this.payeeProcessor.processTableData(this.paginator, this.dataProcess.sort, this.dataProcess.PAYEES);
-
-    setTimeout(() => {
-      console.log(this.payeeProcessor.contentData);
-      this.payee = this.payeeProcessor.contentData;
-    }, 1000);
-  }
 
   openDialog() {
     this.dialog.open(DialogContentExampleDialog);
@@ -88,8 +67,8 @@ export class AddTransactionComponent implements AfterViewInit {
 }
 
 @Component({
-  selector: 'dialog-content-example-dialog',
-  templateUrl: 'dialog-content-example-dialog.html',
+  selector: 'field-require-dialog',
+  templateUrl: 'field-require-dialog.html',
   standalone: true,
   imports: [MatDialogModule, MatButtonModule],
 })

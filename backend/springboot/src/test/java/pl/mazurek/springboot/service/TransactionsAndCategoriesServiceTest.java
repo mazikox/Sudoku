@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import pl.mazurek.springboot.entity.Categories;
+import pl.mazurek.springboot.entity.Currency;
 import pl.mazurek.springboot.entity.TransactionDto;
 import pl.mazurek.springboot.entity.Transactions;
 
@@ -87,7 +88,7 @@ class TransactionsAndCategoriesServiceTest {
     Transactions addTransaction(){
         Transactions transactions = new Transactions();
         transactions.setAmount(5000D);
-        transactions.setCurrencyCode("EUR");
+        transactions.setCurrencyCode(Currency.EUR);
         transactions.setOriginatorAccountNumber("sdgdsgs");
         transactions.setCounterpartyAccount("AD123124124124");
         transactions.setPaymentType("DOMESTIC");

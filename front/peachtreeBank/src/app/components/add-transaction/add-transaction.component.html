@@ -1,44 +1,69 @@
 <form #usersForm="ngForm" (ngSubmit)="addTransaction(usersForm)">
 
+  originatorAccountNumber
+  <br>
   <mat-form-field>
-    <mat-select ngModel name="originatorAccountNumber" placeholder="CHOOSE YOUR ACCOUNT" required>
-      <mat-option *ngFor="let element of account" [value]="element.id">
-        {{element["accountNumber"]}}
-      </mat-option>
-    </mat-select>
-    <mat-error *ngIf="required.invalid">Required </mat-error>
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-select ngModel name="counterpartyAccount" placeholder="CHOOSE YOUR PAYEE" required>
-      <mat-option *ngFor="let element of payee" [value]="element.accountNumber">
+    <mat-select ngModel name="originatorAccountNumber" placeholder="CHOOSE YOUR ACCOUNT" required
+                (ngModelChange)="selectedAccountNumber = $event">
+      <mat-option *ngFor="let element of accountProcessor.contentData" [value]="element.accountNumber">
         {{element.name}}
       </mat-option>
     </mat-select>
-    <mat-error *ngIf="required.invalid">Required </mat-error>
+    <mat-error *ngIf="required.invalid">Required</mat-error>
+  </mat-form-field>
+
+  counterpartyAccount
+  <mat-form-field>
+    <mat-select ngModel name="counterpartyAccount" placeholder="CHOOSE YOUR PAYEE" required>
+      <mat-optgroup class="group" label="--- MY ACCOUNT ---">
+        <ng-container *ngFor="let element of accountProcessor.contentData">
+          <mat-option [value]="element.accountNumber" *ngIf="selectedAccountNumber != element.accountNumber">
+            {{element.name}}
+          </mat-option>
+        </ng-container>
+      </mat-optgroup>
+      <mat-optgroup class="group" label="--- PAYEES ---">
+        <ng-container>
+          <mat-option *ngFor="let element of payeeProcessor.contentData" [value]="element.accountNumber">
+            {{element.name}}
+          </mat-option>
+        </ng-container>
+      </mat-optgroup>
+    </mat-select>
+    <mat-error *ngIf="required.invalid">Required</mat-error>
   </mat-form-field>
 
   <br>
+  amount <br>
+
   <mat-form-field>
-    <input matInput type="text" ngModel name="amount" placeholder="Enter amount"
-           required="true" minlength="10" maxlength="100">
+    <input matInput type="number" ngModel name="amount" placeholder="Enter amount"
+           required min="5" max="10000" pattern="^\d+(\.\d{1,2})?$">
     <mat-error *ngIf="required.invalid">Required</mat-error>
     <mat-icon matSuffix>home</mat-icon>
   </mat-form-field>
   <br>
+
+  title <br>
+
   <mat-form-field>
     <input matInput type="text" ngModel name="title" placeholder="Enter title"
            required minlength="5" maxlength="100">
-    <mat-error *ngIf="required.invalid">Required </mat-error>
+    <mat-error *ngIf="required.invalid">Required</mat-error>
     <mat-icon matSuffix>home</mat-icon>
   </mat-form-field>
   <br>
+  paymentType
+  <br>
   <mat-form-field>
     <input matInput type="text" ngModel name="paymentType" placeholder="Enter paymentType"
-           required minlength="5" maxlength="100">
+           required minlength="4" maxlength="100">
     <mat-icon matSuffix>home</mat-icon>
-    <mat-error *ngIf="required.invalid">Required </mat-error>
+    <mat-error *ngIf="required.invalid">Required</mat-error>
   </mat-form-field>
+  <br>
+
+  Currency
   <br>
   <mat-form-field>
     <mat-select ngModel name="currencyCode" placeholder="Currency Code" required>
@@ -46,9 +71,11 @@
       <mat-option value="EUR">EUR</mat-option>
       <mat-option value="PLN">PLN</mat-option>
     </mat-select>
-    <mat-error *ngIf="required.invalid">Required </mat-error>
-    <!--    <mat-icon> money</mat-icon>-->
+    <mat-error *ngIf="required.invalid">Required</mat-error>
   </mat-form-field>
+  <br>
+
+  Category
   <br>
   <mat-form-field>
     <mat-select ngModel name="categoryCode" placeholder="Category" required>
@@ -56,7 +83,7 @@
         {{element.name}}
       </mat-option>
     </mat-select>
-    <mat-error *ngIf="required.invalid">Required </mat-error>
+    <mat-error *ngIf="required.invalid">Required</mat-error>
   </mat-form-field>
   <br>
   <br>
@@ -64,5 +91,5 @@
 </form>
 
 
-<mat-paginator>
+<mat-paginator id="paginator">
 </mat-paginator>
