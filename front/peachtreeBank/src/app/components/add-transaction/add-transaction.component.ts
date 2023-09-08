@@ -8,6 +8,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSort} from "@angular/material/sort";
 import {takeUntil} from "rxjs";
+import {MatSelectChange} from "@angular/material/select";
 
 @Component({
   selector: 'app-add-transaction',
@@ -27,6 +28,9 @@ export class AddTransactionComponent implements AfterViewInit {
   accountProcessor: any;
   payeeProcessor: any;
   selectedAccountNumber: any;
+  selectedAccountCurrencyCode: any;
+  currencyCode: any;
+  isDisabled: boolean = true;
 
 
   constructor(clientService: ClientService, private dialog: MatDialog, private router: Router) {
@@ -44,6 +48,7 @@ export class AddTransactionComponent implements AfterViewInit {
   }
 
   addTransaction(data: NgForm) {
+    console.log(data.value)
     if (data.valid) {
       this.dataProcess.clientService.addTransaction(data.value).pipe(takeUntil(this.dataProcess.destroy)).subscribe({
         next: () => {
@@ -63,6 +68,18 @@ export class AddTransactionComponent implements AfterViewInit {
 
   openDialog() {
     this.dialog.open(DialogContentExampleDialog);
+  }
+
+  myMethod() {
+    this.accountProcessor.contentData.forEach((value: any) => {
+      if (value.accountNumber == this.selectedAccountNumber) {
+        this.selectedAccountCurrencyCode = value.currency;
+      }
+    })
+  }
+
+  changeDisable() {
+    this.isDisabled = false;
   }
 }
 

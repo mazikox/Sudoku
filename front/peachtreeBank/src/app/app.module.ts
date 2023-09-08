@@ -20,10 +20,14 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {AccountsComponent} from './components/accounts/accounts.component';
 import { AddTransactionComponent } from './components/add-transaction/add-transaction.component';
 import {MatSelectModule} from "@angular/material/select";
+import { AnalyticsComponent } from './components/analytics/analytics.component';
+import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
 
 
 @NgModule({
-  declarations: [AppComponent, BackComponent, PayeesComponent, AddPayeesComponent, AccountsComponent, AddTransactionComponent],
+  declarations: [AppComponent, BackComponent, PayeesComponent, AddPayeesComponent, AccountsComponent, AddTransactionComponent, AnalyticsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -40,6 +44,9 @@ import {MatSelectModule} from "@angular/material/select";
     MatTooltipModule,
     MatSelectModule,
     ReactiveFormsModule,
+    CanvasJSAngularChartsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

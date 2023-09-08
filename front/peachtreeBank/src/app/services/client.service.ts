@@ -37,17 +37,21 @@ export class ClientService {
     return this.httpClient.put(url, body);
   }
 
-  public deletePayee(url: string){
+  public deletePayee(url: string) {
     return this.httpClient.delete(url);
   }
 
-  public getAccountBalance(){
+  public getAccountBalance() {
     return this.httpClient.get("accounts/countBalance");
   }
 
   public getVersion() {
-    return this.httpClient.get('/appversion', { responseType: 'text' });
-    }
+    return this.httpClient.get('/appversion', {responseType: 'text'});
+  }
+
+  public getAnalytics(dateFrom: number, dateTo: number){
+    return this.httpClient.get(`/transactions/groupBy?dateFrom=${dateFrom}&dateTo=${dateTo}`)
+  }
 
   handleError(error: HttpErrorResponse) {
     return throwError(error)
@@ -100,11 +104,21 @@ export interface Transaction {
   title: string;
 }
 
+export interface Analytics {
+  categoryCode: Category
+  count: number
+  minAmount: number
+  maxAmount: number
+  avgAmount: number
+  sum: number;
+}
+
 
 export interface Category {
   categoryCodeId: number;
   name: string;
 }
+
 export interface Payees {
   name: string;
   address: string;

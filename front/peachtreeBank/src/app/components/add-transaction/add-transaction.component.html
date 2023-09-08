@@ -4,7 +4,7 @@
   <br>
   <mat-form-field>
     <mat-select ngModel name="originatorAccountNumber" placeholder="CHOOSE YOUR ACCOUNT" required
-                (ngModelChange)="selectedAccountNumber = $event">
+                (ngModelChange)="selectedAccountNumber = $event" (selectionChange)="myMethod()">
       <mat-option *ngFor="let element of accountProcessor.contentData" [value]="element.accountNumber">
         {{element.name}}
       </mat-option>
@@ -66,14 +66,16 @@
   Currency
   <br>
   <mat-form-field>
-    <mat-select ngModel name="currencyCode" placeholder="Currency Code" required>
-      <mat-option value="USD">USD</mat-option>
-      <mat-option value="EUR">EUR</mat-option>
-      <mat-option value="PLN">PLN</mat-option>
+    <mat-select [(ngModel)]="selectedAccountCurrencyCode" name="currencyCode" placeholder="Currency Code" required>
+      <mat-option value="USD" [disabled]="isDisabled">USD</mat-option>
+      <mat-option value="EUR" [disabled]="isDisabled">EUR</mat-option>
+      <mat-option value="PLN" [disabled]="isDisabled">PLN</mat-option>
     </mat-select>
     <mat-error *ngIf="required.invalid">Required</mat-error>
   </mat-form-field>
+  <mat-icon (click)="changeDisable()" class="icon-lock">{{isDisabled ? 'lock' : 'lock_open'}}}</mat-icon>
   <br>
+
 
   Category
   <br>

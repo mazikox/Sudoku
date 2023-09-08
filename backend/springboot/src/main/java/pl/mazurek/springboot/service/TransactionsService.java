@@ -11,10 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pl.mazurek.springboot.config.TransactionMapper;
-import pl.mazurek.springboot.entity.Categories;
-import pl.mazurek.springboot.entity.MyAccount;
-import pl.mazurek.springboot.entity.TransactionDto;
-import pl.mazurek.springboot.entity.Transactions;
+import pl.mazurek.springboot.entity.*;
 import pl.mazurek.springboot.exception.InvalidAmountException;
 import pl.mazurek.springboot.repo.MyAccountsRepo;
 import pl.mazurek.springboot.repo.TransactionRepo;
@@ -50,20 +47,28 @@ public class TransactionsService {
 
         transaction.setStatus("ENTERED");
         transaction.setDate(Instant.now().getEpochSecond() * 1000);
-        double exchangeValue = 1.0;
+        double exchangeValueSender = 1.0;
+        double exchangeValueReceiver = 1.0;
 
         if (transaction.getCurrencyCode() != sender.getCurrency()) {
-            exchangeValue = getCurrencyExchange(transaction.getCurrencyCode(), sender.getCurrency(), restTemplate);
+            exchangeValueSender = getCurrencyExchange(transaction.getCurrencyCode(), sender.getCurrency(), restTemplate);
         }
 
-        double amount = transaction.getAmount() * exchangeValue;
-        amount = (double) Math.round(amount * 100) / 100;
+        if (receiver != null && (transaction.getCurrencyCode() != receiver.getCurrency())) {
+                exchangeValueReceiver = getCurrencyExchange(transaction.getCurrencyCode(), receiver.getCurrency(), restTemplate);
 
-        if (sender.getBalance() - amount >= 0) {
-            sender.setBalance(sender.getBalance() - amount);
+        }
+
+        double amountSender = transaction.getAmount() * exchangeValueSender;
+        amountSender = (double) Math.round(amountSender * 100) / 100;
+        double amountReceiver = transaction.getAmount() * exchangeValueReceiver;
+        amountReceiver = (double) Math.round(amountReceiver * 100) / 100;
+
+        if (sender.getBalance() - amountSender >= 0) {
+            sender.setBalance(sender.getBalance() - amountSender);
             myAccountsRepo.save(sender);
             if (receiver != null) {
-                receiver.setBalance(receiver.getBalance() + amount);
+                receiver.setBalance(receiver.getBalance() + amountReceiver);
                 myAccountsRepo.save(receiver);
             }
             return transactionRepo.save(transaction);
@@ -84,6 +89,17 @@ public class TransactionsService {
         return transactionRepo.findById(id);
     }
 
+    public List<TransactionDtDto> getTransactionsGroupBy(Long dateFrom, Long dateTo){
+        return transactionRepo.groupBy(dateFrom, dateTo);
+    }
+
+    public List<TransactionDtDto> findByDateBetween(Long start, Long end, Long categoryCode){
+        return transactionRepo.groupByCategory(start, end, categoryCode);
+    }
+
+    private void save2(Transactions transactions){
+        transactionRepo.save(transactions);
+    }
 
 
     public void fillFromJson() {
@@ -98,13 +114,11 @@ public class TransactionsService {
                 });
 
                 for (Transactions transaction : transactionsList) {
-                    save(transaction);
+                    save2(transaction);
                 }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
-
 }

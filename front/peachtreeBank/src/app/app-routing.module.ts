@@ -5,6 +5,7 @@ import {PayeesComponent} from "./components/payees/payees.component";
 import {AddPayeesComponent} from "./components/add-payees/add-payees.component";
 import {AccountsComponent} from "./components/accounts/accounts.component";
 import {AddTransactionComponent} from "./components/add-transaction/add-transaction.component";
+import {AnalyticsComponent} from "./components/analytics/analytics.component";
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'add-transaction',
     component: AddTransactionComponent,
+  },
+  {
+    path: 'analytics',
+    component: AnalyticsComponent,
   }
 ];
 

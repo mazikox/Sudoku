@@ -1,88 +1,144 @@
 {
   "data": [
     {
-      "categoryCode":{
-        "categoryCodeId": "1",
+      "categoryCode": {
+        "categoryCodeId": 1,
         "name": "Zdrowie i uroda"
       },
-      "date": 1600387200000,
-      "amount": 5000,
+      "date": 1694074002000,
+      "amount": 155.5,
       "currencyCode": "EUR",
-      "originatorAccountNumber": "SI64397745065188826",
-      "counterpartyAccount": "AD64397381765128766",
+      "originatorAccountNumber": "FI12345678901234567",
+      "counterpartyAccount": "SE98765432109876543",
       "paymentType": "DOMESTIC",
       "status": "ENTERED",
-      "title": "some title"
+      "title": "Przykład 21"
     },
     {
-      "categoryCode":{
-        "categoryCodeId": "1",
-        "name": "Zdrowie i uroda"
-      },
-      "date": 1600387200000,
-      "amount": 13.3,
-      "currencyCode": "EUR",
-      "originatorAccountNumber": "CD64397745065188826",
-      "counterpartyAccount": "AD64397381765128766",
-      "paymentType": "DOMESTIC",
-      "status": "ACCEPTED",
-      "title": "some title 2"
-    },
-    {
-      "categoryCode":{
-        "categoryCodeId": "5",
-        "name": "Czynsz"
-      },
-      "date": 1600385200000,
-      "amount": 1.8,
-      "currencyCode": "EUR",
-      "originatorAccountNumber": "EF6439457065187826",
-      "counterpartyAccount": "AD64397381765128766",
-      "paymentType": "DOMESTIC",
-      "status": "ACCEPTED",
-      "title": "some title 3"
-    },
-    {
-      "categoryCode":{
-        "categoryCodeId": "1",
-        "name": "Zdrowie i uroda"
-      },
-      "date": 1600385212000,
-      "amount": 11.8,
-      "currencyCode": "USD",
-      "originatorAccountNumber": "GH6439457065187826",
-      "counterpartyAccount": "AD64397639765128766",
-      "paymentType": "DOMESTIC",
-      "status": "COMPLETED",
-      "title": "some title 4"
-    },
-    {
-      "categoryCode":{
-        "categoryCodeId": "2",
+      "categoryCode": {
+        "categoryCodeId": 2,
         "name": "Żywność"
       },
-      "date": 1600385186000,
-      "amount": 107.8,
-      "currencyCode": "EUR",
-      "originatorAccountNumber": "GH6439457065187826",
-      "counterpartyAccount": "AD64397639765128766",
+      "date": 1694074002000,
+      "amount": 165.0,
+      "currencyCode": "USD",
+      "originatorAccountNumber": "DE1111222233334444",
+      "counterpartyAccount": "FR5555666677778888",
       "paymentType": "DOMESTIC",
-      "status": "REJECTED",
-      "title": "some title 5"
+      "status": "ACCEPTED",
+      "title": "Przykład 22"
     },
     {
-      "categoryCode":{
-        "categoryCodeId": "5",
-        "name": "Test"
+      "categoryCode": {
+        "categoryCodeId": 3,
+        "name": "Transport"
       },
-      "date": 1600388886000,
-      "amount": 107.8,
+      "date": 1694074002000,
+      "amount": 175.0,
+      "currencyCode": "PLN",
+      "originatorAccountNumber": "PL990011112222333344445555",
+      "counterpartyAccount": "DE888877776666555544443333",
+      "paymentType": "DOMESTIC",
+      "status": "COMPLETED",
+      "title": "Przykład 23"
+    },
+    {
+      "categoryCode": {
+        "categoryCodeId": 4,
+        "name": "Media"
+      },
+      "date": 1694074002000,
+      "amount": 185.0,
       "currencyCode": "EUR",
-      "originatorAccountNumber": "GH6439457065187826",
-      "counterpartyAccount": "AD64397639765128766",
+      "originatorAccountNumber": "IT777766665555444433332222",
+      "counterpartyAccount": "FR222233331111000099998888",
       "paymentType": "DOMESTIC",
       "status": "REJECTED",
-      "title": "some title 6"
+      "title": "Przykład 24"
+    },
+    {
+      "categoryCode": {
+        "categoryCodeId": 5,
+        "name": "Czynsz"
+      },
+      "date": 1694074002000,
+      "amount": 195.0,
+      "currencyCode": "USD",
+      "originatorAccountNumber": "ES555544443333222211110000",
+      "counterpartyAccount": "FR555577779999888877776666",
+      "paymentType": "DOMESTIC",
+      "status": "ENTERED",
+      "title": "Przykład 25"
+    },
+    {
+      "categoryCode": {
+        "categoryCodeId": 1,
+        "name": "Zdrowie i uroda"
+      },
+      "date": 1694074002000,
+      "amount": 205.0,
+      "currencyCode": "PLN",
+      "originatorAccountNumber": "PL555544443333222211110000",
+      "counterpartyAccount": "DE555544443333222211110000",
+      "paymentType": "DOMESTIC",
+      "status": "ENTERED",
+      "title": "Przykład 26"
+    },
+    {
+      "categoryCode": {
+        "categoryCodeId": 2,
+        "name": "Żywność"
+      },
+      "date": 1694074002000,
+      "amount": 215.0,
+      "currencyCode": "EUR",
+      "originatorAccountNumber": "DE555544443333222211110000",
+      "counterpartyAccount": "FR555544443333222211110000",
+      "paymentType": "DOMESTIC",
+      "status": "ACCEPTED",
+      "title": "Przykład 27"
+    },
+    {
+      "categoryCode": {
+        "categoryCodeId": 3,
+        "name": "Transport"
+      },
+      "date": 1694074002000,
+      "amount": 225.0,
+      "currencyCode": "USD",
+      "originatorAccountNumber": "ES555544443333222211110000",
+      "counterpartyAccount": "FR555544443333222211110000",
+      "paymentType": "DOMESTIC",
+      "status": "COMPLETED",
+      "title": "Przykład 28"
+    },
+    {
+      "categoryCode": {
+        "categoryCodeId": 4,
+        "name": "Media"
+      },
+      "date": 1694074002000,
+      "amount": 235.0,
+      "currencyCode": "PLN",
+      "originatorAccountNumber": "PL555544443333222211110000",
+      "counterpartyAccount": "DE555544443333222211110000",
+      "paymentType": "DOMESTIC",
+      "status": "REJECTED",
+      "title": "Przykład 29"
+    },
+    {
+      "categoryCode": {
+        "categoryCodeId": 5,
+        "name": "Czynsz"
+      },
+      "date": 1694074002000,
+      "amount": 245.0,
+      "currencyCode": "EUR",
+      "originatorAccountNumber": "DE555544443333222211110000",
+      "counterpartyAccount": "FR555544443333222211110000",
+      "paymentType": "DOMESTIC",
+      "status": "ENTERED",
+      "title": "Przykład 30"
     }
   ]
 }
