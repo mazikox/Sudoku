@@ -77,18 +77,7 @@
   <br>
 
 
-  Category
-  <br>
-  <mat-form-field>
-    <mat-select ngModel name="categoryCode" placeholder="Category" required>
-      <mat-option *ngFor="let element of categories" [value]="element">
-        {{element.name}}
-      </mat-option>
-    </mat-select>
-    <mat-error *ngIf="required.invalid">Required</mat-error>
-  </mat-form-field>
-  <br>
-  <br>
+
   <button mat-raised-button>Add new</button>
 </form>
 

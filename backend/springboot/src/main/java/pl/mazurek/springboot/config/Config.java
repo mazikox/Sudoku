@@ -18,4 +18,5 @@ public class Config {
     public Random random(){
         return new Random();
     }
+
 }

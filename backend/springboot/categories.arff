@@ -1,0 +1,393 @@
+@relation TransactionCategories
+@attribute title string
+@attribute class {zdrowie_i_uroda, zywnosc, transport, media, czynsz}
+
+@data
+"Paliwo",transport
+"Zakup kosmetyków",zdrowie_i_uroda
+"Fryzjer",zdrowie_i_uroda
+"Bread and milk",zywnosc
+"Chleb i mleko",zywnosc
+"Naprawa roweru",transport
+"Kino",media
+"Członkostwo w siłowni", zdrowie_i_uroda
+"Fast food", zywnosc
+"Szybkie jedzenie", zywnosc
+"Bilet kolejowy", transport
+"Subskrypcja magazynu", media
+"Bilety do kina", media
+"Leki na przeziębienie", zdrowie_i_uroda
+"Szampon i odżywka", zdrowie_i_uroda
+"Kosmetyki do makijażu", zdrowie_i_uroda
+"Warzywa i owoce", zywnosc
+"Obiad w restauracji", zywnosc
+"Benzyna", transport
+"Bilet na koncert", media
+"Członkostwo w siłowni", zdrowie_i_uroda
+"Fast food", zywnosc
+"Bilet na pociąg", transport
+"Abonament telewizyjny", media
+"Bilet do kina", media
+"Opłata za wynajem mieszkania", czynsz
+"Opłata za prąd", czynsz
+"Telewizor", media
+"Książka o zdrowym stylu życia", zdrowie_i_uroda
+"Kosmetyki do pielęgnacji twarzy", zdrowie_i_uroda
+"Wynajem roweru miejskiego", transport
+"Bilet na pociąg", transport
+"Przekąska na lotnisku", zywnosc
+"Manicure", zdrowie_i_uroda
+"Wynajem samochodu", transport
+"Książki", media
+"Ubrania", media
+"Telefon komórkowy", media
+"Przesyłka kurierska", transport
+"Olejek do masażu", zdrowie_i_uroda
+"Jogurt naturalny", zywnosc
+"Bilet na metro", transport
+"Subskrypcja czasopisma", media
+"Opłata za wynajem mieszkania", czynsz
+"Krem przeciwsłoneczny", zdrowie_i_uroda
+"Sok pomarańczowy", zywnosc
+"Opłata za parkowanie na lotnisku", transport
+"Prenumerata gazety", media
+"Rachunek za prąd", czynsz
+"Rachunki", czynsz
+"Suplement diety", zdrowie_i_uroda
+"Chleb pełnoziarnisty", zywnosc
+"Bilet na autobus miejski", transport
+"Subskrypcja serwisu streamingowego", media
+"Opłata za wynajem biura", czynsz
+"Kosmetyki do pielęgnacji włosów", zdrowie_i_uroda
+"Makaron i sos pomidorowy", zywnosc
+"Opłata za bilet komunikacji miejskiej", transport
+"Prenumerata magazynu modowego", media
+"Rachunek za gaz", czynsz
+"Kosmetyki do pielęgnacji skóry", zdrowie_i_uroda
+"Ziemniaki i marchewki", zywnosc
+"Bilet na tramwaj", transport
+"Subskrypcja serwisu filmowego", media
+"Wynajem mieszkania", czynsz
+"Krem do rąk", zdrowie_i_uroda
+"Owoce cytrusowe", zywnosc
+"Paliwo do samochodu", transport
+"Abonament telewizyjny", media
+"Opłata za wynajem biura", czynsz
+"Perfumy damskie", zdrowie_i_uroda
+"Jogurt naturalny", zywnosc
+"Bilet na pociąg ekspresowy", transport
+"Prenumerata serwisu streamingowego", media
+"Wynajem mieszkania na przedmieściach", czynsz
+"Krem przeciwsłoneczny SPF 50", zdrowie_i_uroda
+"Oliwa z oliwek extra virgin", zywnosc
+"Paliwo do samochodu elektrycznego", transport
+"Bilet na koncert rockowy", media
+"Wynajem biura na godzinę", czynsz
+"Maszynka do golenia", zdrowie_i_uroda
+"Miód naturalny", zywnosc
+"Bilet na autobus nocny", transport
+"Prenumerata czasopisma naukowego", media
+"Dom na wynajem na wsi", czynsz
+"Szampon do włosów farbowanych", zdrowie_i_uroda
+"Owoce sezonowe", zywnosc
+"Bilet na lot samolotem", transport
+"Prenumerata gazety sportowej", media
+"Mieszkanie na wynajem w centrum miasta", czynsz
+"Krem przeciwzmarszczkowy", zdrowie_i_uroda
+"Kasza gryczana", zywnosc
+"Bilet na statek wycieczkowy", transport
+"Subskrypcja serwisu muzycznego", media
+"Wynajem garażu", czynsz
+"Zestaw do makijażu", zdrowie_i_uroda
+"Mięso drobiowe", zywnosc
+"Bilet na rower miejski", transport
+"Subskrypcja audiobooków", media
+"Wynajem pokoju na studiach", czynsz
+"Perfumy męskie", zdrowie_i_uroda
+"Warzywa świeże i sezonowe", zywnosc
+"Bilet na autobus podmiejski", transport
+"Subskrypcja serwisu streamingowego", media
+"Kwatera na wynajem na wakacje", czynsz
+"Pielęgnacja włosów", zdrowie_i_uroda
+"Produkty ekologiczne", zywnosc
+"Paliwo do samochodu hybrydowego", transport
+"Kupno filmów online", media
+"Wynajem domu na wakacje", czynsz
+"Zestaw kosmetyków do makijażu", zdrowie_i_uroda
+"Sok owocowy świeżo wyciskany", zywnosc
+"Bilet na prom", transport
+"Subskrypcja serwisu e-booków", media
+"Wynajem apartamentu na plaży", czynsz
+"Pielęgnacja paznokci", zdrowie_i_uroda
+"Chleb pełnoziarnisty", zywnosc
+"Bilet na rower górski", transport
+"Subskrypcja gier online", media
+"Wynajem domku letniskowego", czynsz
+"Pielęgnacja ciała", zdrowie_i_uroda
+"Produkty bezglutenowe", zywnosc
+"Bilet na metro", transport
+"Subskrypcja audiobooków", media
+"Kwatera na wynajem w górach", czynsz
+"Pielęgnacja twarzy", zdrowie_i_uroda
+"Ryby świeże z targowiska", zywnosc
+"Bilet na autobus miejski", transport
+"Subskrypcja serwisu filmowego", media
+"Wynajem apartamentu na wybrzeżu", czynsz
+"Samochód", transport
+"Jogurt", zywnosc
+"Telewizor", media
+"Kosmetyki", zdrowie_i_uroda
+"Rower", transport
+"Kamera", media
+"Chleb", zywnosc
+"Basen", zdrowie_i_uroda
+"Komputer", media
+"Mieszkanie", czynsz
+"Kino", media
+"Telefon", media
+"Ser", zywnosc
+"Fitness", zdrowie_i_uroda
+"Rowerek", transport
+"Gry komputerowe", media
+"Makaron", zywnosc
+"Gabinet stomatologiczny", zdrowie_i_uroda
+"Tramwaj", transport
+"Koncert", media
+"Tablet", media
+"Pomarańcze", zywnosc
+"Siłownia", zdrowie_i_uroda
+"Pociąg", transport
+"Muzyka", media
+"Kawa", zywnosc
+"Dentysta", zdrowie_i_uroda
+"Autobus", transport
+"Kinofilm", media
+"Herbata", zywnosc
+"Psychoterapeuta", zdrowie_i_uroda
+"Rozkład jazdy", transport
+"Książki", media
+"Chipsy", zywnosc
+"Kosmetyczka", zdrowie_i_uroda
+"Rower górski", transport
+"Radio", media
+"Miód", zywnosc
+"Dermatolog", zdrowie_i_uroda
+"Taxi", transport
+"Serial TV", media
+"Szpinak", zywnosc
+"Fitness klub", zdrowie_i_uroda
+"Bilet lotniczy", transport
+"Film dokumentalny", media
+"Chia seeds", zywnosc
+"Pediatra", zdrowie_i_uroda
+"Metropolitan", transport
+"Gazeta", media
+"Orzechy", zywnosc
+"Fryzjer", zdrowie_i_uroda
+"Motocykl", transport
+"E-book", media
+"Jogurt naturalny", zywnosc
+"Okulista", zdrowie_i_uroda
+"Autobus szkolny", transport
+"Podcast", media
+"Ciastka", zywnosc
+"Przychodnia", zdrowie_i_uroda
+"Bilet tramwajowy", transport
+"Telewizja", media
+"Awokado", zywnosc
+"Chirurg plastyczny", zdrowie_i_uroda
+"Rower miejski", transport
+"Komiks", media
+"Marchewka", zywnosc
+"Dietetyk", zdrowie_i_uroda
+"Kolejka górska", media
+"Smartfon", media
+"Pieczywo", zywnosc
+"Stomatolog", zdrowie_i_uroda
+"Taksówka", transport
+"Gra wideo", media
+"Jabłka", zywnosc
+"Masaż", zdrowie_i_uroda
+"Samolot", transport
+"Internet", media
+"Sałatka", zywnosc
+"Fizjoterapeuta", zdrowie_i_uroda
+"Pociąg ekspresowy", transport
+"Strona internetowa", media
+"Kasza", zywnosc
+"Kosmetyki naturalne", zdrowie_i_uroda
+"Autobus nocny", transport
+"Kanał YouTube", media
+"Pieczywo razowe", zywnosc
+"Zdrowa żywność", zdrowie_i_uroda
+"Riksza", transport
+"Prasa", media
+"Ryby", zywnosc
+"Salon kosmetyczny", zdrowie_i_uroda
+"Bilet kolejowy", transport
+"Gazety i czasopisma", media
+"Owoce egzotyczne", zywnosc
+"Rehabilitacja", zdrowie_i_uroda
+"Bilet autokarowy", transport
+"Strumienie wideo", media
+"Pasta do zębów", zdrowie_i_uroda
+"Ziemniaki", zywnosc
+"Wynajem samochodu", transport
+"Streaming", media
+"Płatki śniadaniowe", zywnosc
+"Medycyna estetyczna", zdrowie_i_uroda
+"Rower elektryczny", transport
+"Radio internetowe", media
+"Chipsy ziemniaczane", zywnosc
+"Dietetyczne danie", zdrowie_i_uroda
+"Pociąg miejski", transport
+"Portal informacyjny", media
+"Pizza", zywnosc
+"Kosmetyki do pielęgnacji włosów", zdrowie_i_uroda
+"Bilet metra", transport
+"Księgarnia", media
+"Kawa ziarnista", zywnosc
+"Zabieg kosmetyczny", zdrowie_i_uroda
+"Rowerek stacjonarny", transport
+"Radio FM", media
+"Czekolada", zywnosc
+"Wizyta u dermatologa", zdrowie_i_uroda
+"Bilet promowy", transport
+"Telewizja kablowa", media
+"Herbata zielona", zywnosc
+"Recepta lekarska", zdrowie_i_uroda
+"Gry komputerowe online", media
+"Kurczak", zywnosc
+"Wizyta u okulisty", zdrowie_i_uroda
+"Bilet rowerowy", transport
+"Portal społecznościowy", media
+"Ryż", zywnosc
+"Wizyta u psychoterapeuty", zdrowie_i_uroda
+"Bilet na pociąg szybki", transport
+"Telewizor OLED", media
+"Chleb razowy", zywnosc
+"Kosmetyki do makijażu", zdrowie_i_uroda
+"Kosmetyki naturalne", zdrowie_i_uroda
+"Telefon komórkowy", media
+"Ser kozi", zywnosc
+"Zestaw do manicure", zdrowie_i_uroda
+"Rower miejski", transport
+"Konsola do gier", media
+"Szparagi", zywnosc
+"Kosmetyki do pielęgnacji ciała", zdrowie_i_uroda
+"Autobus podmiejski", transport
+"Strona internetowa", media
+"Jogurt grecki", zywnosc
+"Rehabilitacja po wypadku", zdrowie_i_uroda
+"Skuter", transport
+"Magazyn online", media
+"Orzechy włoskie", zywnosc
+"Kosmetyki antyaging", zdrowie_i_uroda
+"Bilet tramwajowy", transport
+"Muzyka na żywo", media
+"Kosmetyki do pielęgnacji twarzy", zdrowie_i_uroda
+"Bilet kolejowy", transport
+"Portal informacyjny", media
+"Warzywa świeże", zywnosc
+"Kosmetyki do włosów", zdrowie_i_uroda
+"Bilet na prom", transport
+"Radio internetowe", media
+"Owoce morza", zywnosc
+"Wizyta u fizjoterapeuty", zdrowie_i_uroda
+"Bilet metra", transport
+"Gry komputerowe online", media
+"Chleb pszenny", zywnosc
+"Pedicure", zdrowie_i_uroda
+"Bilet lotniczy", transport
+"Telewizor LED", media
+"Kasza jaglana", zywnosc
+"Kosmetyki do pielęgnacji paznokci", zdrowie_i_uroda
+"Samolot", transport
+"Kanał telewizyjny", media
+"Mięso wołowe", zywnosc
+"Wizyta u ortodonty", zdrowie_i_uroda
+"Kolejka górska", transport
+"Kino domowe", media
+"Oliwa z oliwek", zywnosc
+"Medycyna estetyczna", zdrowie_i_uroda
+"Rower elektryczny", transport
+"Kosmetyki do pielęgnacji dłoni", zdrowie_i_uroda
+"Bilet kolejowy", transport
+"Portal internetowy", media
+"Kawa mielona", zywnosc
+"Poradnia psychologiczna", zdrowie_i_uroda
+"Rower górski", transport
+"Telewizja satelitarna", media
+"Chipsy kukurydziane", zywnosc
+"Wizyta u ginekologa", zdrowie_i_uroda
+"Bilet autobusowy", transport
+"Kosmetyki naturalne", zdrowie_i_uroda
+"Radio FM", media
+"Herbata owocowa", zywnosc
+"Pociąg ekspresowy", transport
+"Gry wideo online", media
+"Sałatka warzywna", zywnosc
+"Samochód elektryczny", transport
+"Podcast audio", media
+"Mąka", zywnosc
+"Rowerek treningowy", transport
+"Telewizja HD", media
+"Ciasto", zywnosc
+"Zabiegi kosmetyczne", zdrowie_i_uroda
+"Bilet na prom", transport
+"Rowerek spinningowy", transport
+"Serwis streamingowy", media
+"Ryż basmati", zywnosc
+"Wizyta u psychologa", zdrowie_i_uroda
+"Bilet tramwajowy", transport
+"Portal informacyjny online", media
+"Kosmetyki do pielęgnacji ciała", zdrowie_i_uroda
+"Bilet metra", transport
+"Gry planszowe", media
+"Herbata czarna", zywnosc
+"Wizyta u endokrynologa", zdrowie_i_uroda
+"Bilet kolejowy", transport
+"Serwis muzyczny", media
+"Pizza", zywnosc
+"Kosmetyki do pielęgnacji włosów", zdrowie_i_uroda
+"Bilet samolotowy", transport
+"Telewizja 4K", media
+"Kawa rozpuszczalna", zywnosc
+"Zabiegi medycyny estetycznej", zdrowie_i_uroda
+"Pociąg miejski", transport
+"Strona internetowa firmy", media
+"Bułki", zywnosc
+"Pielęgnacja paznokci hybrydowych", zdrowie_i_uroda
+"Joga i medytacja", zdrowie_i_uroda
+"Książka o zdrowym odżywianiu", zdrowie_i_uroda
+"Wynajem roweru w górach", transport
+"Prenumerata czasopisma naukowego", media
+"Wynajem apartamentu w centrum miasta", czynsz
+"Krem do opalania", zdrowie_i_uroda
+"Kawa zbożowa", zywnosc
+"Kosmetyki do pielęgnacji brody", zdrowie_i_uroda
+"Bilet na lot balonem", transport
+"Telefon komórkowy z aparatem fotograficznym", media
+"Ryby wędzone", zywnosc
+"Konsultacja u psychiatry dziecięcego", zdrowie_i_uroda
+"Wynajem samochodu na wakacje", transport
+"Portal edukacyjny online", media
+"Owoce suszone", zywnosc
+"Trening personalny", zdrowie_i_uroda
+"Bilet na metro szybkie", transport
+"Prenumerata audiobooków", media
+"Kosmetyki do makijażu mineralnego", zdrowie_i_uroda
+"Rowerek stacjonarny magnetyczny", transport
+"Radio internetowe rockowe", media
+"Kasza kuskus", zywnosc
+"Kosmetyki do pielęgnacji paznokci żelowych", zdrowie_i_uroda
+"Bilet na prom nocny", transport
+"Telewizja satelitarna HD", media
+"Ciasteczka owsiane", zywnosc
+"Wizyta u fizjoterapeuty dziecięcego", zdrowie_i_uroda
+"Samochód hybrydowy", transport
+"Podcast kulinarny", media
+"Mleko migdałowe", zywnosc
+"Kosmetyki do pielęgnacji mężczyzn", zdrowie_i_uroda
+"Bilet kolejowy nocny", transport
+"Serwis streamingowy muzyki klasycznej", media

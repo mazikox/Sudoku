@@ -3,6 +3,7 @@
   <input matInput (keyup.enter)="applySort($event)" placeholder="sort"/>
 </mat-form-field>
 
+<mat-spinner *ngIf="loading" color="accent"></mat-spinner>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 

@@ -1,14 +1,16 @@
 package pl.mazurek.springboot.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
+@NoArgsConstructor
+@Builder
 public class TransactionDtDto {
     private Categories categoryCode;
+    private Currency currencyCode;
     private Long count;
     private Double sum;
     private Double minAmount;

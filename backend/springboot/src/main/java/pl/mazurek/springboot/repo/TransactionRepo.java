@@ -19,20 +19,9 @@ public interface TransactionRepo extends JpaRepository<Transactions, Long> {
     Page<Transactions> findByCategoryCode(Categories categories, Pageable pageable);
 
     @Query(value = "select new pl.mazurek.springboot.entity.TransactionDtDto" +
-            "(tr.categoryCode ,count(tr), sum(tr.amount) , min(tr.amount), max(tr.amount), avg(tr.amount)) " +
+            "(tr.categoryCode, tr.currencyCode, count(tr), sum(tr.amount), min(tr.amount), max(tr.amount), avg(tr.amount)) " +
             "FROM Transactions tr " +
             "WHERE tr.date between :dateFrom and :dateTo " +
-            "group by tr.categoryCode")
+            "group by tr.categoryCode, tr.currencyCode")
     List<TransactionDtDto> groupBy(@Param("dateFrom") Long dateFrom, @Param("dateTo") Long dateTo);
-
-
-    @Query(value = "select new pl.mazurek.springboot.entity.TransactionDtDto" +
-            "(tr.categoryCode ,count(tr), sum(tr.amount) , min(tr.amount), max(tr.amount), avg(tr.amount)) " +
-            "FROM Transactions tr " +
-            "WHERE tr.date between :dateFrom and :dateTo AND tr.categoryCode.categoryCodeId = :categoryCodeId " +
-            "group by tr.categoryCode")
-    List<TransactionDtDto> groupByCategory(@Param("dateFrom") Long dateFrom,
-                                           @Param("dateTo") Long dateTo,
-                                           @Param("categoryCodeId") Long categoryCodeId);
-
 }

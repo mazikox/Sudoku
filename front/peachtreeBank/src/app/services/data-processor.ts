@@ -21,6 +21,8 @@ export class DataProcessor implements OnDestroy {
   categoryCode = '';
   destroy = new Subject<void>();
 
+  loading: boolean = true;
+
   private dataProcessed = new Subject<void>();
 
   public constructor(public clientService: ClientService) {
@@ -38,6 +40,7 @@ export class DataProcessor implements OnDestroy {
       .pipe(
         startWith({}),
         switchMap(() => {
+          this.loading = true;
           return this.getTableData$(paginator.pageIndex).pipe(
             catchError(() => observableOf(null))
           );
@@ -46,6 +49,7 @@ export class DataProcessor implements OnDestroy {
           if (contentData == null) return [];
           this.totalElements = contentData.totalElements;
           this.pageSize = contentData.size;
+          this.loading = false;
           return contentData.content;
         }),
         takeUntil(this.destroy)

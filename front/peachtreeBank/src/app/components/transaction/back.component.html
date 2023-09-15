@@ -1,11 +1,13 @@
 <mat-form-field>
   <mat-label>Category Code</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="1" #inputFilter />
+  <input matInput (keyup)="applyFilter($event)" placeholder="1" #inputFilter/>
 </mat-form-field>
 <mat-form-field>
   <mat-label>Sort</mat-label>
-  <input matInput (keyup.enter)="applySort($event)" placeholder="sort" />
+  <input matInput (keyup.enter)="applySort($event)" placeholder="sort"/>
 </mat-form-field>
+
+<mat-spinner *ngIf="loading" color="accent"></mat-spinner>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 

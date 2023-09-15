@@ -10,19 +10,22 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import pl.mazurek.springboot.config.Test;
 import pl.mazurek.springboot.config.TransactionMapper;
 import pl.mazurek.springboot.entity.*;
+import pl.mazurek.springboot.entity.Currency;
 import pl.mazurek.springboot.exception.InvalidAmountException;
+import pl.mazurek.springboot.repo.CategoriesRepo;
 import pl.mazurek.springboot.repo.MyAccountsRepo;
 import pl.mazurek.springboot.repo.TransactionRepo;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
-import static pl.mazurek.springboot.config.CurrencyExchange.getCurrencyExchange;
+import static pl.mazurek.springboot.config.CurrencyExchange.getCurrencyExchangeRate;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -30,7 +33,7 @@ public class TransactionsService {
 
     private final TransactionRepo transactionRepo;
     private final MyAccountsRepo myAccountsRepo;
-    private final ObjectMapper mapper;
+    private final CategoriesRepo categoriesRepo;
     private final RestTemplate restTemplate;
 
 
@@ -51,11 +54,11 @@ public class TransactionsService {
         double exchangeValueReceiver = 1.0;
 
         if (transaction.getCurrencyCode() != sender.getCurrency()) {
-            exchangeValueSender = getCurrencyExchange(transaction.getCurrencyCode(), sender.getCurrency(), restTemplate);
+            exchangeValueSender = getCurrencyExchangeRate(transaction.getCurrencyCode(), sender.getCurrency(), restTemplate);
         }
 
         if (receiver != null && (transaction.getCurrencyCode() != receiver.getCurrency())) {
-                exchangeValueReceiver = getCurrencyExchange(transaction.getCurrencyCode(), receiver.getCurrency(), restTemplate);
+            exchangeValueReceiver = getCurrencyExchangeRate(transaction.getCurrencyCode(), receiver.getCurrency(), restTemplate);
 
         }
 
@@ -64,9 +67,14 @@ public class TransactionsService {
         double amountReceiver = transaction.getAmount() * exchangeValueReceiver;
         amountReceiver = (double) Math.round(amountReceiver * 100) / 100;
 
+//        Set category by title
+        Categories category = findCategoryByTitle(transaction.getTitle());
+        transaction.setCategoryCode(category);
+
         if (sender.getBalance() - amountSender >= 0) {
             sender.setBalance(sender.getBalance() - amountSender);
             myAccountsRepo.save(sender);
+            // for existed payee in database
             if (receiver != null) {
                 receiver.setBalance(receiver.getBalance() + amountReceiver);
                 myAccountsRepo.save(receiver);
@@ -79,7 +87,12 @@ public class TransactionsService {
 
 
     public Page<TransactionDto> find(int page, int size, String sort, Long categoryCode) {
-        PageRequest pr = PageRequest.of(page, size, Sort.by(sort));
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        PageRequest pr = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, sort));
         return categoryCode == 0 ?
                 transactionRepo.findAll(pr).map(TransactionMapper.INSTANCE::transactionToTransactionDto) :
                 transactionRepo.findByCategoryCode(new Categories(categoryCode, ""), pr).map(TransactionMapper.INSTANCE::transactionToTransactionDto);
@@ -89,35 +102,61 @@ public class TransactionsService {
         return transactionRepo.findById(id);
     }
 
-    public List<TransactionDtDto> getTransactionsGroupBy(Long dateFrom, Long dateTo){
-        return transactionRepo.groupBy(dateFrom, dateTo);
-    }
-
-    public List<TransactionDtDto> findByDateBetween(Long start, Long end, Long categoryCode){
-        return transactionRepo.groupByCategory(start, end, categoryCode);
-    }
-
-    private void save2(Transactions transactions){
-        transactionRepo.save(transactions);
-    }
-
-
-    public void fillFromJson() {
-        File file = new File("backend/springboot/src/main/java/pl/mazurek/springboot/transactions-k.json");
-
+    public List<TransactionDtDto> getTransactionsGroupBy(Long dateFrom, Long dateTo) {
         try {
-            JsonNode rootNode = mapper.readTree(file);
-            JsonNode dataNode = rootNode.get("data");
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        List<TransactionDtDto> transactionList = transactionRepo.groupBy(dateFrom, dateTo);
+        Map<String, List<TransactionDtDto>> groupedTransactions = transactionList.stream()
+                .collect(Collectors.groupingBy(
+                        transaction -> transaction.getCategoryCode().getName()
+                ));
 
-            if (dataNode.isArray()) {
-                List<Transactions> transactionsList = mapper.readValue(dataNode.toString(), new TypeReference<>() {
-                });
+        List<TransactionDtDto> result = new ArrayList<>();
 
-                for (Transactions transaction : transactionsList) {
-                    save2(transaction);
+        // group by categoryCode with currency change
+        for (Map.Entry<String, List<TransactionDtDto>> entry : groupedTransactions.entrySet()) {
+            List<TransactionDtDto> transactionEntryList = entry.getValue();
+            Categories categoryCode = entry.getValue().get(0).getCategoryCode();
+            Currency currencyCode = entry.getValue().get(0).getCurrencyCode();
+            Long count = 0L;
+            Double sum = 0D;
+            Double minAmount = 0D;
+            Double maxAmount = 0D;
+            Double avgAmount = 0D;
+
+            for (TransactionDtDto transaction : transactionEntryList) {
+                count += transaction.getCount();
+                if (transaction.getCurrencyCode() != Currency.PLN) {
+                    sum += Math.round(transaction.getSum() * getCurrencyExchangeRate(transaction.getCurrencyCode(), Currency.PLN, restTemplate) * 100.0) / 100.0;
+                } else {
+                    sum += transaction.getSum();
                 }
             }
-        } catch (IOException e) {
+            TransactionDtDto transactionAnalytics = TransactionDtDto.builder()
+                    .categoryCode(categoryCode)
+                    .currencyCode(currencyCode)
+                    .count(count)
+                    .sum(sum)
+                    .minAmount(minAmount)
+                    .maxAmount(maxAmount)
+                    .avgAmount(avgAmount)
+                    .build();
+            result.add(transactionAnalytics);
+        }
+
+        return result;
+    }
+
+    private Categories findCategoryByTitle(String title){
+        try {
+            String categoryName = Test.genereteCategoryByTitle(title);
+            categoryName = categoryName.substring(0,1).toUpperCase() + categoryName.substring(1);
+            categoryName = categoryName.replace("_", " ");
+            return categoriesRepo.findByName(categoryName);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

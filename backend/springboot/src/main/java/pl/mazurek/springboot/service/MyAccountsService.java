@@ -27,6 +27,11 @@ public class MyAccountsService {
     }
 
     public Page<MyAccount> findAll(int page, int size) {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         PageRequest pr = PageRequest.of(page, size);
         return myAccountsRepo.findAll(pr);
     }
@@ -40,7 +45,7 @@ public class MyAccountsService {
                 sum += myAccount.getBalance();
             }
             else{
-                sum += myAccount.getBalance() * CurrencyExchange.getCurrencyExchange(myAccount.getCurrency(), currency, restTemplate);
+                sum += myAccount.getBalance() * CurrencyExchange.getCurrencyExchangeRate(myAccount.getCurrency(), currency, restTemplate);
             }
         }
         return (double) Math.round(sum * 100) / 100;

@@ -1,13 +1,14 @@
 import {Component} from '@angular/core';
 import {ClientService} from "../../services/client.service";
-import {FormControl, FormGroup} from "@angular/forms";
-import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from "@angular/material-moment-adapter";
+import {FormControl} from "@angular/forms";
+import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter} from "@angular/material-moment-adapter";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
-import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
+import * as _moment from 'moment';
 import {default as _rollupMoment, Moment} from 'moment';
 import {MatDatepicker} from "@angular/material/datepicker";
+import {catchError, forkJoin, retry, Subject, takeUntil, throwError} from "rxjs";
 
 const moment = _rollupMoment || _moment;
 export const MY_FORMATS = {
@@ -21,6 +22,7 @@ export const MY_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
+
 @Component({
   selector: 'app-analytics',
   templateUrl: './analytics.component.html',
@@ -40,19 +42,21 @@ export const MY_FORMATS = {
 })
 export class AnalyticsComponent {
 
-  information: any;
-  information1stWeek: any;
-  information2ndWeek: any;
-  information3rdWeek: any;
-  information4thWeek: any;
-  information5thWeek: any;
+  statistics: any;
+  statistics1stWeek: any;
+  statistics2ndWeek: any;
+  statistics3rdWeek: any;
+  statistics4thWeek: any;
+  statistics5thWeek: any;
 
   chart: any;
   isButtonVisible = false;
+  loading: boolean = true;
 
   date = new FormControl(moment());
   firstDayOfMonth: any = moment().startOf('month').valueOf();
   lastDayOfMonth: any = moment().endOf('month').valueOf();
+  destroy = new Subject<void>();
 
   chosenYearHandler(normalizedYear: Moment) {
     const ctrlValue = this.date.value;
@@ -79,9 +83,11 @@ export class AnalyticsComponent {
     this.date.setValue(ctrlValue);
     datepicker.close();
 
-    this.clearDatapoints();
-    this.getInfo();
+    this.loading = true;
+    this.clearDataPoints();
+    this.clearStatistics();
     this.getInfoOfMonth();
+    this.getInfoOfMonthWithSegments();
   }
 
 
@@ -89,16 +95,16 @@ export class AnalyticsComponent {
     this.chart = chart;
     this.chart.options = this.transactionOptions;
     this.chart.options.data = this.options["data"];
-    this.getInfo();
     this.getInfoOfMonth();
+    this.getInfoOfMonthWithSegments();
   }
 
   transactionInstance() {
     this.chart.options = this.transactionOptions;
     this.chart.options.data = this.options["data"];
     this.chart.render();
-    this.clearDatapoints();
     this.isButtonVisible = false;
+    this.clearDataPoints();
   }
 
   categoryHandler = (e: any) => {
@@ -176,67 +182,81 @@ export class AnalyticsComponent {
   constructor(private clientService: ClientService) {
   }
 
-  getInfo() {
-    this.clientService.getAnalytics(this.firstDayOfMonth, this.lastDayOfMonth).subscribe(data => {
-      this.information = data;
-      console.log(this.information)
-      for (let i = 0; i <= 4; i++) {
-        this.options.data[0].dataPoints[i].name = this.information[i].categoryCode.name;
-        this.options.data[0].dataPoints[i].y = this.information[i].sum;
-      }
-      this.chart.render();
-    });
+  getInfoOfMonth() {
+    this.clientService.getAnalytics(this.firstDayOfMonth, this.lastDayOfMonth).pipe()
+      .subscribe(data => {
+        this.statistics = data;
+        console.log(this.statistics)
+        for (let i = 0; i <= 4; i++) {
+          this.options.data[0].dataPoints[i].name = this.statistics[i].categoryCode.name;
+          this.options.data[0].dataPoints[i].y = this.statistics[i].sum;
+        }
+        this.loading = false;
+        this.chart.render();
+      });
   }
 
-  getInfoOfMonth() {
+  getInfoOfMonthWithSegments() {
     let dateFrom = this.firstDayOfMonth;
     let dateTo = this.lastDayOfMonth;
 
     let divider = Math.floor((dateTo - dateFrom) / 5);
+    const requests = [];
 
-    this.clientService.getAnalytics(dateFrom, dateFrom + divider).subscribe(data => {
-      this.information1stWeek = data;
-    });
-    this.clientService.getAnalytics(dateFrom + divider, dateFrom + divider * 2).subscribe(data => {
-      this.information2ndWeek = data;
-      console.log(dateFrom + divider)
-      console.log(this.information2ndWeek)
-    });
-    this.clientService.getAnalytics(dateFrom + divider * 2, dateFrom + divider * 3).subscribe(data => {
-      this.information3rdWeek = data;
-    });
-    this.clientService.getAnalytics(dateFrom + divider * 3, dateFrom + divider * 4).subscribe(data => {
-      this.information4thWeek = data;
-    });
-    this.clientService.getAnalytics(dateFrom + divider * 4, dateFrom + divider * 5).subscribe(data => {
-      this.information5thWeek = data;
+
+    for (let i = 0; i < 5; i++) {
+      const fromDate = dateFrom + divider * i;
+      const toDate = dateFrom + divider * (i + 1);
+
+      requests.push(
+        this.clientService.getAnalytics(fromDate, toDate).pipe(
+          retry(3),
+          takeUntil(this.destroy)
+        )
+      );
+    }
+
+    forkJoin(requests).subscribe(dataArray => {
+      this.statistics1stWeek = dataArray[0];
+      this.statistics2ndWeek = dataArray[1];
+      this.statistics3rdWeek = dataArray[2];
+      this.statistics4thWeek = dataArray[3];
+      this.statistics5thWeek = dataArray[4];
     });
   }
 
   getOptions(categoryName: string) {
     const informationWeeks = [
-      this.information1stWeek,
-      this.information2ndWeek,
-      this.information3rdWeek,
-      this.information4thWeek,
-      this.information5thWeek
+      this.statistics1stWeek,
+      this.statistics2ndWeek,
+      this.statistics3rdWeek,
+      this.statistics4thWeek,
+      this.statistics5thWeek
     ];
 
     for (let weekIndex = 0; weekIndex < informationWeeks.length; weekIndex++) {
       const week = informationWeeks[weekIndex];
 
-      for (let i = 0; i < week.length; i++) {
-        if (week[i].categoryCode.name == categoryName) {
-          this.options.Category[0].dataPoints[weekIndex].y = week[i].sum;
-          console.log(week[i].sum)
+      console.log(week)
+      for (const element of week) {
+        if (element.categoryCode.name == categoryName) {
+          this.options.Category[0].dataPoints[weekIndex].y = element.sum;
         }
       }
     }
   }
 
-  clearDatapoints(){
-    for (let i = 0; i <=4 ; i++) {
+  clearDataPoints() {
+    for (let i = 0; i <= 4; i++) {
       this.options.Category[0].dataPoints[i].y = 0;
     }
+  }
+
+  clearStatistics(){
+    this.statistics1stWeek = [];
+    this.statistics2ndWeek = [];
+    this.statistics3rdWeek = [];
+    this.statistics4thWeek = [];
+    this.statistics5thWeek = [];
   }
 }

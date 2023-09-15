@@ -53,6 +53,11 @@ public class PayeesService {
     }
 
     public Page<Payees> find(int page, int size, String sort) {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         PageRequest pr = sort.equals("") ? PageRequest.of(page, size) : PageRequest.of(page, size, Sort.by(sort));
         return payeesRepo.findPayeesByActive(pr, true);
     }

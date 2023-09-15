@@ -1,5 +1,7 @@
 
-<table mat-table [dataSource]="dataSource.data" class = "mat-elevation-z8" matSort>
+<mat-spinner *ngIf="loading" color="accent"></mat-spinner>
+
+<table mat-table [dataSource]="dataSource" class = "mat-elevation-z8" matSort>
 
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>

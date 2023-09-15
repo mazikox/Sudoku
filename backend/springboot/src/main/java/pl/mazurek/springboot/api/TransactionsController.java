@@ -27,16 +27,11 @@ public class TransactionsController {
     public Page<TransactionDto> find(
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "100") Integer pageSize,
-            @RequestParam(defaultValue = "id") String sort,
+            @RequestParam(defaultValue = "date") String sort,
             @RequestParam(defaultValue = "0") Long categoryCode) {
         return transactionsService.find(page, pageSize, sort, categoryCode);
     }
 
-
-    @GetMapping("/fill")
-    public void fillFromJson() {
-        transactionsService.fillFromJson();
-    }
 
     @PostMapping("/add")
     public void add(@RequestBody Transactions transaction) {
@@ -48,9 +43,5 @@ public class TransactionsController {
         return transactionsService.getTransactionsGroupBy(dateFrom, dateTo);
     }
 
-    @GetMapping("/date")
-    public List<TransactionDtDto> datebeetween(@RequestParam Long dateFrom, @RequestParam Long dateTo, @RequestParam(defaultValue = "1") Long categoryCode) {
-        return transactionsService.findByDateBetween(dateFrom, dateTo, categoryCode);
-    }
 
 }

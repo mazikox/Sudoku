@@ -24,30 +24,32 @@ import { AnalyticsComponent } from './components/analytics/analytics.component';
 import {CanvasJSAngularChartsModule} from "@canvasjs/angular-charts";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 @NgModule({
   declarations: [AppComponent, BackComponent, PayeesComponent, AddPayeesComponent, AccountsComponent, AddTransactionComponent, AnalyticsComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatTableModule,
-    MatInputModule,
-    MatPaginatorModule,
-    MatSortModule,
-    FormsModule,
-    MatIconModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatTooltipModule,
-    MatSelectModule,
-    ReactiveFormsModule,
-    CanvasJSAngularChartsModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MatTableModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatSortModule,
+        FormsModule,
+        MatIconModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatTooltipModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        CanvasJSAngularChartsModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatProgressSpinnerModule,
+    ],
   providers: [],
   bootstrap: [AppComponent],
 })

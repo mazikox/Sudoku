@@ -1,3 +1,10 @@
 .mat-row{
   color: beige;
 }
+mat-spinner{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  transform: scale(0.5);
+  color: white;
+}

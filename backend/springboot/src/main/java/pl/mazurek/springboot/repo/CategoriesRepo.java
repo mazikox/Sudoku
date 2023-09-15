@@ -6,4 +6,5 @@ import pl.mazurek.springboot.entity.Categories;
 
 @Repository
 public interface CategoriesRepo extends JpaRepository<Categories, Long> {
+    Categories findByName(String name);
 }
