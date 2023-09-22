@@ -1,8 +1,9 @@
 
 <div>
-  <canvasjs-chart [styles]="{width: '100%', height:'360px'}" (chartInstance)="getChartInstance($event)"></canvasjs-chart>
+  <canvasjs-chart [styles]="{width: '60%', height:'360px'}" (chartInstance)="getChartInstance($event)"></canvasjs-chart>
   <button [ngClass]="'backButton'" *ngIf="isButtonVisible" (click)="transactionInstance()">Back</button>
 </div>
+
 <mat-spinner *ngIf="loading" color="accent"></mat-spinner>
 
 <mat-form-field>

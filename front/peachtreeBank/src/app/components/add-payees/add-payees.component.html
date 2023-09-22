@@ -1,24 +1,33 @@
+<body>
 <form #usersForm="ngForm" (ngSubmit)="addPayee(usersForm)">
+  <div class="header">
+    <h1> Payment details </h1>
+  </div>
+
+  <p> Name: </p>
   <mat-form-field>
     <input matInput type="text" ngModel name="name" placeholder="Enter name"
            required minlength="5" maxlength="30">
     <mat-error *ngIf="name.invalid">Required min. 5 number of chars</mat-error>
     <mat-icon matSuffix>face</mat-icon>
   </mat-form-field>
-  <br>
+
+  <p> Address: </p>
   <mat-form-field>
     <input matInput type="text" ngModel name="address" placeholder="Enter address"
            required minlength="10" maxlength="100">
     <mat-icon matSuffix>home</mat-icon>
     <mat-error *ngIf="address.invalid">Required min. 10 number of chars</mat-error>
   </mat-form-field>
-  <br>
+
+  <p> Account number: </p>
   <mat-form-field>
     <input matInput type="text" ngModel name="accountNumber" id="accountNumber" placeholder="Enter Account number"
            required minlength="26" maxlength="26">
     <mat-icon matSuffix>account_balance_wallet</mat-icon>
     <mat-error *ngIf="accountNumber.invalid">Required 26 number of chars. Only numbers</mat-error>
   </mat-form-field>
-  <br>
+
   <button mat-raised-button>Add new</button>
 </form>
+</body>

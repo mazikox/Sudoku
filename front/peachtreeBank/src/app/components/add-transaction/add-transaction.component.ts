@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormControl, NgForm, Validators} from "@angular/forms";
-import {Account, Category, ClientService, Payees} from "../../services/client.service";
+import {Category, ClientService} from "../../services/client.service";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {Router} from "@angular/router";
 import {DataProcessor} from "../../services/data-processor";
@@ -8,12 +8,11 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatButtonModule} from "@angular/material/button";
 import {MatSort} from "@angular/material/sort";
 import {takeUntil} from "rxjs";
-import {MatSelectChange} from "@angular/material/select";
 
 @Component({
   selector: 'app-add-transaction',
   templateUrl: './add-transaction.component.html',
-  styleUrls: ['./add-transaction.component.scss']
+  styleUrls: ['./add-transaction.component.scss'],
 })
 export class AddTransactionComponent implements AfterViewInit {
 

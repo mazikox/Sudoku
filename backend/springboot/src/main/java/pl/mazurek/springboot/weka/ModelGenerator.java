@@ -1,4 +1,4 @@
-package pl.mazurek.springboot.config;
+package pl.mazurek.springboot.weka;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

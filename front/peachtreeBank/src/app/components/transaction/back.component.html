@@ -1,78 +1,86 @@
-<mat-form-field>
-  <mat-label>Category Code</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="1" #inputFilter/>
-</mat-form-field>
-<mat-form-field>
-  <mat-label>Sort</mat-label>
-  <input matInput (keyup.enter)="applySort($event)" placeholder="sort"/>
-</mat-form-field>
+<div class="inputs">
+  <div class="category">
+    <p>Category id</p>
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Input category Id (ex. 1)" #inputFilter/>
+    </mat-form-field>
+  </div>
+  <div class="sort">
+    <p>Sort by column name</p>
+    <mat-form-field>
+      <input matInput (keyup.enter)="applySort($event)" placeholder="Sort by (ex. amount)"/>
+    </mat-form-field>
+  </div>
+</div>
 
 <mat-spinner *ngIf="loading" color="accent"></mat-spinner>
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+<div class="table">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-  </ng-container>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="categoryCode">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>categoryCode</th>
-    <td mat-cell *matCellDef="let element">{{ element["categoryCode"] }}</td>
-  </ng-container>
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Title</th>
+      <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="date">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>date</th>
-    <td mat-cell *matCellDef="let element">{{ element.date }}</td>
-  </ng-container>
+    <ng-container matColumnDef="categoryCode">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+      <td mat-cell *matCellDef="let element">{{ element["categoryCode"] }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="amount">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>amount</th>
-    <td mat-cell *matCellDef="let element">{{ element.amount }}</td>
-  </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+      <td mat-cell *matCellDef="let element">{{ element.date }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="currencyCode">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>currencyCode</th>
-    <td mat-cell *matCellDef="let element">{{ element["currencyCode"] }}</td>
-  </ng-container>
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+      <td mat-cell *matCellDef="let element">{{ element.amount }} {{ element.currencyCode }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="originatorAccountNumber">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>originatorAccountNumber</th>
-    <td mat-cell *matCellDef="let element">{{ element["originatorAccountNumber"] }}
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="currencyCode">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Currency</th>
+      <td mat-cell *matCellDef="let element">{{ element["currencyCode"] }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="counterpartyAccount">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>counterpartyAccount</th>
-    <td mat-cell *matCellDef="let element">{{ element["counterpartyAccount"] }}
-    </td>
-  </ng-container>
+    <ng-container matColumnDef="originatorAccountNumber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>originatorAccountNumber</th>
+      <td mat-cell *matCellDef="let element">{{ element["originatorAccountNumber"] }}
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="paymentType">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>paymentType</th>
-    <td mat-cell *matCellDef="let element">{{ element["paymentType"] }}</td>
-  </ng-container>
+    <ng-container matColumnDef="counterpartyAccount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>counterpartyAccount</th>
+      <td mat-cell *matCellDef="let element">{{ element["counterpartyAccount"] }}
+      </td>
+    </ng-container>
 
-  <ng-container matColumnDef="status">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>status</th>
-    <td mat-cell *matCellDef="let element">{{ element.status }}</td>
-  </ng-container>
+    <ng-container matColumnDef="paymentType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>paymentType</th>
+      <td mat-cell *matCellDef="let element">{{ element["paymentType"] }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>title</th>
-    <td mat-cell *matCellDef="let element">{{ element.title }}</td>
-  </ng-container>
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+    </ng-container>
 
-  <tr mat-header-row *matHeaderRowDef="displayColumn"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayColumn"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayColumn"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayColumn"></tr>
 
-  <tr class="mat-row" *matNoDataRow>
-    <td class="mat-cell" colspan="4">No transactions matching the category Code "{{ inputFilter.value }}"</td>
-  </tr>
-</table>
-<mat-paginator
-  [length]="totalElements"
-  [pageSize]="pageSize"
-  aria-label="Page"
->
-</mat-paginator>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No transactions matching the category Code "{{ inputFilter.value }}"</td>
+    </tr>
+  </table>
+  <mat-paginator
+    [length]="totalElements"
+    [pageSize]="pageSize"
+    aria-label="Page"
+  >
+  </mat-paginator>
+</div>

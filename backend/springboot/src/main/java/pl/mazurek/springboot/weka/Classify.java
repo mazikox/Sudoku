@@ -1,15 +1,15 @@
-package pl.mazurek.springboot.config;
+package pl.mazurek.springboot.weka;
 
 import weka.core.Instances;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.StringToWordVector;
 
-public class Test {
+public class Classify {
 
     public static final String DATASETPATH = "C:\\Projects\\git\\backend\\springboot\\categories.arff";
     public static final String MODELPATH = "C:\\Projects\\git\\backend\\springboot\\model.bin";
 
-    public static void main(String[] args) throws Exception {
+    public static void main3(String[] args) throws Exception {
 
         ModelGenerator mg = new ModelGenerator();
 
@@ -68,5 +68,9 @@ public class Test {
         ModelClassifier cls = new ModelClassifier();
 
         return cls.classifiy(Filter.useFilter(cls.createInstance(title, 0), filter), MODELPATH);
+    }
+
+    public static void main(String[] args) throws Exception {
+        System.out.println(genereteCategoryByTitle("rower"));
     }
 }

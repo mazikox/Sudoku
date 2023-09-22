@@ -11,16 +11,11 @@ import {DataProcessor} from "../../services/data-processor";
 })
 export class BackComponent extends DataProcessor implements AfterViewInit {
   displayColumn: string[] = [
-    'id',
-    'categoryCode',
-    'date',
-    'amount',
-    'currencyCode',
-    'originatorAccountNumber',
-    'counterpartyAccount',
-    'paymentType',
-    'status',
     'title',
+    'categoryCode',
+    'amount',
+    'status',
+    'date',
   ];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

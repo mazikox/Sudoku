@@ -5,3 +5,17 @@ mat-spinner{
   transform: scale(0.5);
   color: white;
 }
+.input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mdc-text-field__input{
+  color: #464659 !important;
+}
+table{
+  background-color: #E5ECF4 !important;
+}
+tr:hover td {
+  background: #D8E1F0;
+}

@@ -1,6 +1,7 @@
 
 <mat-spinner *ngIf="loading" color="accent"></mat-spinner>
 
+<div class="table">
 <table mat-table [dataSource]="dataSource" class = "mat-elevation-z8" matSort>
 
   <ng-container matColumnDef="id">
@@ -38,3 +39,4 @@
   [pageSize]="pageSize"
   aria-label="Page">
 </mat-paginator>
+</div>

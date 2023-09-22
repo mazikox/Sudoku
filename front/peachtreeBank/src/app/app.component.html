@@ -1,39 +1,41 @@
-<br>
-<button class="router-button" routerLink="/transactions">
-  TRANSACTIONS LIST
-</button>
+<div class="header-buttons">
+  <div class="buttons">
+    <a routerLink="/transactions">
+      TRANSACTIONS LIST
+    </a>
 
-<button class="router-button" routerLink="/payees">
-  PAYEES LIST
-</button>
+    <a routerLink="/payees">
+      PAYEES LIST
+    </a>
 
-<button class="router-button" routerLink="/add-payee">
-  ADD NEW PAYEE
-</button>
+    <a routerLink="/add-payee">
+      ADD NEW PAYEE
+    </a>
 
-<button class="router-button" routerLink="/accounts">
-  MY ACCOUNTS
-</button>
+    <a routerLink="/accounts">
+      MY ACCOUNTS
+    </a>
 
-<button class="router-button" routerLink="/add-transaction">
-  NEW TRANSACTION
-</button>
+    <a routerLink="/add-transaction">
+      NEW TRANSACTION
+    </a>
 
-<button class="router-button" routerLink="/analytics">
-  ANALYTICS
-</button>
-
-<div class = "account-balance-frame">
-  ACCOUNT BALANCE
-  <div class="balance-number">
-    {{balance}}
+    <a routerLink="/analytics">
+      ANALYTICS
+    </a>
+  </div>
+  <div class="balance-container">
+    ACCOUNT BALANCE:
+    {{ balance }}
+     PLN
   </div>
 </div>
+
 
 <br/><br/>
 <router-outlet></router-outlet>
 <footer>
   <div class="version" *ngIf="data">
-    <pre>{{ data }}</pre>
+    Version: {{ data }}
   </div>
 </footer>

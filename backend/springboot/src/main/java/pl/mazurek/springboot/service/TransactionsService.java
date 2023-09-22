@@ -1,8 +1,5 @@
 package pl.mazurek.springboot.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,7 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import pl.mazurek.springboot.config.Test;
+import pl.mazurek.springboot.weka.Classify;
 import pl.mazurek.springboot.config.TransactionMapper;
 import pl.mazurek.springboot.entity.*;
 import pl.mazurek.springboot.entity.Currency;
@@ -19,8 +16,6 @@ import pl.mazurek.springboot.repo.CategoriesRepo;
 import pl.mazurek.springboot.repo.MyAccountsRepo;
 import pl.mazurek.springboot.repo.TransactionRepo;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -63,9 +58,9 @@ public class TransactionsService {
         }
 
         double amountSender = transaction.getAmount() * exchangeValueSender;
-        amountSender = (double) Math.round(amountSender * 100) / 100;
+        amountSender = roundNumbersToTwoPlaces(amountSender);
         double amountReceiver = transaction.getAmount() * exchangeValueReceiver;
-        amountReceiver = (double) Math.round(amountReceiver * 100) / 100;
+        amountReceiver = roundNumbersToTwoPlaces(amountReceiver);
 
 //        Set category by title
         Categories category = findCategoryByTitle(transaction.getTitle());
@@ -152,12 +147,16 @@ public class TransactionsService {
 
     private Categories findCategoryByTitle(String title){
         try {
-            String categoryName = Test.genereteCategoryByTitle(title);
+            String categoryName = Classify.genereteCategoryByTitle(title);
             categoryName = categoryName.substring(0,1).toUpperCase() + categoryName.substring(1);
             categoryName = categoryName.replace("_", " ");
             return categoriesRepo.findByName(categoryName);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private double roundNumbersToTwoPlaces(double balance){
+        return (double) Math.round(balance * 100) / 100;
     }
 }

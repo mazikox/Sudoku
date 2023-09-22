@@ -3,7 +3,6 @@ import {ClientService} from "../../services/client.service";
 import {FormControl} from "@angular/forms";
 import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter} from "@angular/material-moment-adapter";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-
 // tslint:disable-next-line:no-duplicate-imports
 import * as _moment from 'moment';
 import {default as _rollupMoment, Moment} from 'moment';
@@ -87,7 +86,7 @@ export class AnalyticsComponent {
     this.clearDataPoints();
     this.clearStatistics();
     this.getInfoOfMonth();
-    this.getInfoOfMonthWithSegments();
+    this.getInfoOfMonthWeekly();
   }
 
 
@@ -96,7 +95,7 @@ export class AnalyticsComponent {
     this.chart.options = this.transactionOptions;
     this.chart.options.data = this.options["data"];
     this.getInfoOfMonth();
-    this.getInfoOfMonthWithSegments();
+    this.getInfoOfMonthWeekly();
   }
 
   transactionInstance() {
@@ -130,7 +129,10 @@ export class AnalyticsComponent {
       fontColor: "white",
       padding: 5
     }],
-    data: []
+    data: [],
+    backgroundColor: [
+      "#E9F1FA"
+    ]
   };
 
   categoryOptions = {
@@ -141,7 +143,10 @@ export class AnalyticsComponent {
       gridThickness: 0,
       lineThickness: 1
     },
-    data: []
+    data: [],
+    backgroundColor: [
+      "#E9F1FA"
+    ]
   };
 
   options = {
@@ -196,7 +201,7 @@ export class AnalyticsComponent {
       });
   }
 
-  getInfoOfMonthWithSegments() {
+  getInfoOfMonthWeekly() {
     let dateFrom = this.firstDayOfMonth;
     let dateTo = this.lastDayOfMonth;
 

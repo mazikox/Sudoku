@@ -1,18 +1,21 @@
+<body>
 <form #usersForm="ngForm" (ngSubmit)="addTransaction(usersForm)">
+  <div class="header">
+    <h1> Payment details </h1>
+  </div>
+  <p>Originator Account Number</p>
 
-  originatorAccountNumber
-  <br>
   <mat-form-field>
     <mat-select ngModel name="originatorAccountNumber" placeholder="CHOOSE YOUR ACCOUNT" required
                 (ngModelChange)="selectedAccountNumber = $event" (selectionChange)="myMethod()">
       <mat-option *ngFor="let element of accountProcessor.contentData" [value]="element.accountNumber">
-        {{element.name}}
+        {{element.name}}  {{element.balance}} {{element.currency}}
       </mat-option>
     </mat-select>
     <mat-error *ngIf="required.invalid">Required</mat-error>
   </mat-form-field>
 
-  counterpartyAccount
+  <p>Counterparty Account</p>
   <mat-form-field>
     <mat-select ngModel name="counterpartyAccount" placeholder="CHOOSE YOUR PAYEE" required>
       <mat-optgroup class="group" label="--- MY ACCOUNT ---">
@@ -33,38 +36,38 @@
     <mat-error *ngIf="required.invalid">Required</mat-error>
   </mat-form-field>
 
-  <br>
-  amount <br>
+  <p>Amount</p>
 
-  <mat-form-field>
+  <mat-form-field class="mat-form-field-outline">
     <input matInput type="number" ngModel name="amount" placeholder="Enter amount"
            required min="5" max="10000" pattern="^\d+(\.\d{1,2})?$">
     <mat-error *ngIf="required.invalid">Required</mat-error>
     <mat-icon matSuffix>home</mat-icon>
   </mat-form-field>
-  <br>
 
-  title <br>
+  <p>Title</p>
 
-  <mat-form-field>
+  <mat-form-field class="mat-form-field-outline">
     <input matInput type="text" ngModel name="title" placeholder="Enter title"
            required minlength="5" maxlength="100">
     <mat-error *ngIf="required.invalid">Required</mat-error>
     <mat-icon matSuffix>home</mat-icon>
   </mat-form-field>
-  <br>
-  paymentType
-  <br>
+
+  <p>Payment Type</p>
+
   <mat-form-field>
     <input matInput type="text" ngModel name="paymentType" placeholder="Enter paymentType"
            required minlength="4" maxlength="100">
     <mat-icon matSuffix>home</mat-icon>
     <mat-error *ngIf="required.invalid">Required</mat-error>
   </mat-form-field>
-  <br>
 
-  Currency
-  <br>
+
+  <p>
+    Currency
+    <mat-icon (click)="changeDisable()" class="icon-lock">{{isDisabled ? 'lock' : 'lock_open'}}}</mat-icon>
+  </p>
   <mat-form-field>
     <mat-select [(ngModel)]="selectedAccountCurrencyCode" name="currencyCode" placeholder="Currency Code" required>
       <mat-option value="USD" [disabled]="isDisabled">USD</mat-option>
@@ -73,10 +76,6 @@
     </mat-select>
     <mat-error *ngIf="required.invalid">Required</mat-error>
   </mat-form-field>
-  <mat-icon (click)="changeDisable()" class="icon-lock">{{isDisabled ? 'lock' : 'lock_open'}}}</mat-icon>
-  <br>
-
-
 
   <button mat-raised-button>Add new</button>
 </form>
@@ -84,3 +83,4 @@
 
 <mat-paginator id="paginator">
 </mat-paginator>
+</body>
